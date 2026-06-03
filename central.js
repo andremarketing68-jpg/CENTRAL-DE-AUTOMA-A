@@ -1220,3 +1220,22 @@ function monitorarUsuariosOnline() {
 
 // Ativa o monitoramento assim que a central for aberta
 monitorarUsuariosOnline();
+function monitorarUsuariosOnline() {
+    const FIREBASE_URL = "https://automatizador-7d7d7-default-rtdb.firebaseio.com/usuarios_online.json";
+
+    setInterval(() => {
+        fetch(FIREBASE_URL)
+            .then(resposta => resposta.json())
+            .then(dados => {
+                const totalOnline = dados ? Object.keys(dados).length : 0;
+                const elementoContador = document.getElementById("contador-online");
+                
+                if (elementoContador) {
+                    elementoContador.innerHTML = `🟢 Usuários online: ${totalOnline}`;
+                }
+            })
+            .catch(erro => console.error("Erro ao atualizar o painel:", erro));
+    }, 3000);
+}
+
+monitorarUsuariosOnline();
