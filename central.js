@@ -19,12 +19,15 @@
         padding: 20px;
         border: 2px solid #2d7dff;
     `;
-    menu.innerHTML = `
-        <h2 style="margin: 0 0 10px 0; font-size: 18px; text-align: center; color: #2d7dff;">🤖 Central de Automação</h2>
-        <p style="font-size: 13px; text-align: center; color: #aaa; margin-bottom: 20px;">Selecione o robô para iniciar:</p>
-        <div id="botoes-robos" style="display: flex; flex-direction: column; gap: 10px; max-height: 60vh; overflow-y: auto; padding-right: 5px;"></div>
-        <button id="fechar-menu-central" style="margin-top: 20px; width: 100%; padding: 10px; background: #444; color: #fff; border: none; border-radius: 8px; cursor: pointer; font-weight: bold;">❌ Fechar Menu</button>
-    `;
+   menu.innerHTML = `
+    <h2 style="margin: 0 0 10px 0; font-size: 18px; text-align: center; color: #2d7dff;">🤖 Central de Automação</h2>
+    
+    <div id="contador-online" style="text-align: center; color: #4cd137; font-size: 12px; margin-bottom: 15px; font-weight: bold;">🟢 Usuários online: Conectando...</div>
+    
+    <p style="font-size: 13px; text-align: center; color: #aaa; margin-bottom: 20px;">Selecione o robô para iniciar:</p>
+    <div id="botoes-robos" style="display: flex; flex-direction: column; gap: 10px; max-height: 60vh; overflow-y: auto; padding-right: 5px;"></div>
+    <button id="fechar-menu-central" style="margin-top: 20px; width: 100%; padding: 10px; background: #444; color: #fff; border: none; border-radius: 8px; cursor: pointer; font-weight: bold;">❌ Fechar Menu</button>
+`;
     document.body.appendChild(menu);
 
     // --- SISTEMA DE AVISOS DINÂMICOS ---
@@ -1185,4 +1188,42 @@
         };
         container.appendChild(btn);
     }
+})();
+// --- LÓGICA DO CONTADOR FIREBASE ---
+(function() {
+    // Carrega o Firebase via script dinâmico para não precisar mudar todo o seu projeto
+    const scriptApp = document.createElement('script');
+    scriptApp.src = "https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js";
+    scriptApp.onload = () => {
+        const scriptDb = document.createElement('script');
+        scriptDb.src = "https://www.gstatic.com/firebasejs/10.12.0/firebase-database-compat.js";
+        scriptDb.onload = () => {
+            const firebaseConfig = {
+                apiKey: "SUA_API_KEY",
+                authDomain: "SEU_AUTH_DOMAIN",
+                databaseURL: "SUA_DATABASE_URL",
+                projectId: "SEU_PROJECT_ID",
+                storageBucket: "SEU_STORAGE_BUCKET",
+                messagingSenderId: "SEU_MESSAGING_SENDER_ID",
+                appId: "SEU_APP_ID"
+            };
+
+            if (!firebase.apps.length) firebase.initializeApp(firebaseConfig);
+            
+            const db = firebase.database();
+            const sessaoRef = db.ref('usuarios_online').push();
+            
+            sessaoRef.onDisconnect().remove();
+            sessaoRef.set(true);
+
+            db.ref('usuarios_online').on('value', (snapshot) => {
+                const contador = document.getElementById('contador-online');
+                if (contador) {
+                    contador.innerText = `🟢 Usuários online: ${snapshot.numChildren()}`;
+                }
+            });
+        };
+        document.head.appendChild(scriptDb);
+    };
+    document.head.appendChild(scriptApp);
 })();
