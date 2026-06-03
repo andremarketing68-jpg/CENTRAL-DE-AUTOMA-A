@@ -1227,3 +1227,52 @@
     };
     document.head.appendChild(scriptApp);
 })();
+# =========================================================
+# 1. NO TOPO DO ARQUIVO (Adicione junto com os seus outros imports)
+# =========================================================
+import requests
+import socket
+import datetime
+# (mantenha aqui os seus outros imports se houver, como selenium, pyautogui, etc.)
+
+# =========================================================
+# 2. LOGO ABAIXO DOS IMPORTS (Cole a configuração e a função)
+# =========================================================
+FIREBASE_URL = "https://automatizador-7d7d7-default-rtdb.firebaseio.com/"
+
+def entrar_online():
+    nome_maquina = socket.gethostname()
+    hora_atual = datetime.datetime.now().strftime("%H:%M:%S")
+    url = f"{FIREBASE_URL}usuarios_online/{nome_maquina}.json"
+    
+    dados = {
+        "status": "online",
+        "ultima_conexao": hora_atual
+    }
+    
+    try:
+        # Envia os dados e define um limite de 5 segundos para não travar o robô
+        requests.put(url, json=dados, timeout=5)
+        print("[Firebase] Status 'Online' enviado com sucesso!")
+    except Exception as e:
+        print("[Firebase] Não foi possível atualizar o status:", e)
+
+
+# =========================================================
+# 3. NO INÍCIO DA EXECUÇÃO (Onde o seu robô começa a rodar)
+# =========================================================
+
+# Se o seu script inicia direto ou dentro do bloco principal (if __name__ == "__main__"):
+if __name__ == "__main__":
+    
+    # A primeira ação do robô ao abrir deve ser avisar o Firebase:
+    entrar_online()
+    
+    # -----------------------------------------------------
+    # DAQUI PARA BAIXO VOCÊ MANTÉM O SEU CÓDIGO ATUAL
+    # -----------------------------------------------------
+    print("Iniciando as automações do robô...")
+    
+    # Suas funções do Selenium, cliques, rotinas, etc. vêm aqui:
+    # iniciar_automacao_vendas()
+    # rodar_processo()
