@@ -1189,3 +1189,31 @@
         container.appendChild(btn);
     }
 })();
+// =========================================================
+// FUNÇÃO PARA MOSTRAR OS USUÁRIOS ONLINE SIMULTANEAMENTE
+// =========================================================
+function monitorarUsuariosOnline() {
+    // Link direto para a pasta que o Python está alimentando
+    const FIREBASE_URL = "https://automatizador-7d7d7-default-rtdb.firebaseio.com/usuarios_online.json";
+
+    // Executa a checagem a cada 3 segundos (tempo real)
+    setInterval(() => {
+        fetch(FIREBASE_URL)
+            .then(resposta => resposta.json())
+            .then(dados => {
+                // Se houver computadores registrados, conta quantos são. Se estiver vazio, define como 0.
+                const totalOnline = dados ? Object.keys(dados).length : 0;
+                
+                // Encontra o contador que você criou na linha 25
+                const elementoContador = document.getElementById("contador-online");
+                
+                if (elementoContador) {
+                    elementoContador.innerHTML = `🟢 Usuários online: ${totalOnline}`;
+                }
+            })
+            .catch(erro => console.error("Erro ao atualizar o painel:", erro));
+    }, 3000); // 3000 milissegundos = 3 segundos
+}
+
+// Ativa o monitoramento assim que a central for aberta
+monitorarUsuariosOnline();
