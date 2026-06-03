@@ -19,14 +19,17 @@
         padding: 20px;
         border: 2px solid #2d7dff;
     `;
-   menu.innerHTML = `
-    <h2 style="margin: 0 0 10px 0; font-size: 18px; text-align: center; color: #2d7dff;">🤖 Central de Automação</h2>
+ // Localize onde o menu é criado (por volta da linha 23) e deixe o HTML assim:
+menu.innerHTML = `
+    <h2 style="margin: 0 0 10px 0; font-size: 18px; text-align: center; color: #2d7dff;">⚙️ Central de Automação</h2>
     
-    <div id="contador-online" style="text-align: center; color: #4cd137; font-size: 12px; margin-bottom: 15px; font-weight: bold;">🟢 Usuários online: Conectando...</div>
+    <div id="contador-online" style="text-align: center; color: #ffbf37; font-size: 12px; margin-bottom: 15px; font-weight: bold;">🟢 Usuários online: Conectando...</div>
+    
+    <div style="background: #fff3cd; color: #856404; padding: 10px; border-radius: 5px; margin-bottom: 15px; font-size: 11px; font-weight: bold; text-align: center;">
+        ⚠️ ATENÇÃO:<br>TRF EM MANUTENÇÃO!!!!
+    </div>
     
     <p style="font-size: 13px; text-align: center; color: #aaa; margin-bottom: 20px;">Selecione o robô para iniciar:</p>
-    <div id="botoes-robos" style="display: flex; flex-direction: column; gap: 10px; max-height: 60vh; overflow-y: auto; padding-right: 5px;"></div>
-    <button id="fechar-menu-central" style="margin-top: 20px; width: 100%; padding: 10px; background: #444; color: #fff; border: none; border-radius: 8px; cursor: pointer; font-weight: bold;">❌ Fechar Menu</button>
 `;
     document.body.appendChild(menu);
 
