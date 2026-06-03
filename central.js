@@ -19,7 +19,6 @@
         padding: 20px;
         border: 2px solid #2d7dff;
     `;
- // Localize onde o menu é criado (por volta da linha 23) e deixe o HTML assim:
 menu.innerHTML = `
     <h2 style="margin: 0 0 10px 0; font-size: 18px; text-align: center; color: #2d7dff;">⚙️ Central de Automação</h2>
     
