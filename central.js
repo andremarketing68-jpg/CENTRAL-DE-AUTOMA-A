@@ -19,17 +19,26 @@
         padding: 20px;
         border: 2px solid #2d7dff;
     `;
-menu.innerHTML = `
-    <h2 style="margin: 0 0 10px 0; font-size: 18px; text-align: center; color: #2d7dff;">⚙️ Central de Automação</h2>
-    
-    <div id="contador-online" style="text-align: center; color: #ffbf37; font-size: 12px; margin-bottom: 15px; font-weight: bold;">🟢 Usuários online: Conectando...</div>
-    
-    <div style="background: #fff3cd; color: #856404; padding: 10px; border-radius: 5px; margin-bottom: 15px; font-size: 11px; font-weight: bold; text-align: center;">
-        ⚠️ ATENÇÃO:<br>TRF EM MANUTENÇÃO!!!!
-    </div>
-    
-    <p style="font-size: 13px; text-align: center; color: #aaa; margin-bottom: 20px;">Selecione o robô para iniciar:</p>
-`;
+// ... (parte inicial do seu código até o menu.innerHTML)
+
+// Abaixo, você mantém o elemento contador no HTML:
+// <div id="contador-online" ...>Carregando...</div>
+
+// E logo após o document.body.appendChild(menu); você coloca a chamada da API:
+
+fetch('https://api.countapi.xyz/hit/seu-site/chave') // Substitua "seu-site/chave" por um nome único seu
+  .then(response => response.json())
+  .then(data => {
+    const contador = document.getElementById('contador-online');
+    if(contador) {
+      contador.innerText = '👥 Usuários online: ' + data.value;
+    }
+  })
+  .catch(() => {
+    document.getElementById('contador-online').innerText = '👥 Erro ao carregar contador';
+  });
+
+// ... (resto do seu código)
     document.body.appendChild(menu);
 
     // --- SISTEMA DE AVISOS DINÂMICOS ---
