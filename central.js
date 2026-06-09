@@ -284,7 +284,7 @@ fetch('https://api.countapi.xyz/hit/seu-site/chave') // Substitua "seu-site/chav
                 };
             })();
         },
-      "TJDF": () => {
+"TJDF": () => {
     (() => {
         if (document.getElementById('b403-painel-root')) return;
         let codigos = [];
@@ -295,6 +295,7 @@ fetch('https://api.countapi.xyz/hit/seu-site/chave') // Substitua "seu-site/chav
         let pausado = false;
         let painel = null;
         let statusEl, contadorEl;
+
         const criarPainelEntrada = () => {
             painel = document.createElement('div');
             painel.id = 'b403-painel-root';
@@ -303,35 +304,57 @@ fetch('https://api.countapi.xyz/hit/seu-site/chave') // Substitua "seu-site/chav
             document.body.appendChild(painel);
             painel.querySelector('#b403-iniciar').onclick = iniciarAutomacao;
         };
+
         const iniciarAutomacao = () => {
             const texto = painel.querySelector('#b403-input').value || '';
-            const matches = texto.match(/(403|900)\d{5}/g) || [];
+            
+            // Extrai todos os números do texto colado
+            const numerosBrutos = texto.match(/\d+/g) || [];
+            const matches = [];
+            
+            numerosBrutos.forEach(num => {
+                // Se o código já começa com 403 ou 900, usamos ele do jeito que está
+                if (num.startsWith('403') || num.startsWith('900')) {
+                    matches.push(num);
+                } 
+                // Se não tem prefixo e tiver pelo menos 4 dígitos, adiciona o '900' na frente automaticamente
+                else if (num.length >= 4) {
+                    matches.push('900' + num);
+                }
+            });
+
             if (!matches.length) {
                 alert('Nenhum código válido.');
                 return;
             }
+            
             const contagem = {};
             matches.forEach(m => { contagem[m] = (contagem[m] || 0) + 1; });
             const unicos = [...new Set(matches)];
             const order = unicos.filter(c => contagem[c] === 1).concat(unicos.filter(c => contagem[c] > 1));
             codigos = order.map(k => ({ cod: k, qtd: contagem[k] }));
+            
             painel.innerHTML = '<div style="font-weight:600;margin-bottom:10px;">⚙️ Automação 403/900</div><div id="b403-status">Status: iniciado</div><div id="b403-contador">0 / ' + codigos.length + '</div><div style="margin-top:10px;display:grid;grid-template-columns:1fr 1fr;gap:6px;"><button id="b403-pausar">⏸ Pausar</button><button id="b403-pular">⏭ Pular</button><button id="b403-encerrar" style="grid-column:1/3;">❌ Encerrar</button></div>';
             statusEl = painel.querySelector('#b403-status');
             contadorEl = painel.querySelector('#b403-contador');
             painel.querySelector('#b403-pausar').onclick = togglePause;
             painel.querySelector('#b403-pular').onclick = () => { executando = false; avancarProximo(); };
             painel.querySelector('#b403-encerrar').onclick = finalizar;
+            
             observer = new MutationObserver(() => !pausado && executarProximo());
             observer.observe(document.body, { childList: true, subtree: true });
             executarProximo();
         };
+
         const setStatus = t => statusEl.textContent = 'Status: ' + t;
         const setContador = () => contadorEl.textContent = idx + ' / ' + codigos.length;
+        
         const togglePause = () => {
             pausado = !pausado;
             setStatus(pausado ? 'pausado' : 'retomado');
             if (!pausado) executarProximo();
         };
+
         const adicionarEventoEnterAoInput = () => {
             const input = document.querySelector('#HandleTermo');
             if (!input || input.dataset.enterAdded) return;
@@ -342,6 +365,7 @@ fetch('https://api.countapi.xyz/hit/seu-site/chave') // Substitua "seu-site/chav
             });
             input.dataset.enterAdded = '1';
         };
+
         const selecionarTabelaTJDF = () => {
             setStatus('aguardando tabela');
             obsTabelaAtual = new MutationObserver(() => {
@@ -355,6 +379,7 @@ fetch('https://api.countapi.xyz/hit/seu-site/chave') // Substitua "seu-site/chav
             });
             obsTabelaAtual.observe(document.body, { childList: true, subtree: true });
         };
+
         const verificarEPreencherQuantidade = () => {
             const itemAtual = codigos[idx];
             if (itemAtual.qtd > 1) {
@@ -382,11 +407,13 @@ fetch('https://api.countapi.xyz/hit/seu-site/chave') // Substitua "seu-site/chav
                 avancarProximo();
             }
         };
+
         const avancarProximo = () => {
             executando = false;
             idx++;
             executarProximo();
         };
+
         const executarProximo = () => {
             if (pausado || executando) return;
             if (idx >= codigos.length) {
@@ -406,6 +433,7 @@ fetch('https://api.countapi.xyz/hit/seu-site/chave') // Substitua "seu-site/chav
             c.dispatchEvent(new Event('input', { bubbles: true }));
             c.dispatchEvent(new Event('change', { bubbles: true }));
         };
+
         const finalizar = () => {
             pausado = true;
             executando = false;
@@ -434,9 +462,10 @@ fetch('https://api.countapi.xyz/hit/seu-site/chave') // Substitua "seu-site/chav
             };
             painel.appendChild(btnFechar);
         };
+
         criarPainelEntrada();
     })();
-},
+}
         "PM/STJ": () => {
             (function () {
                 if (window._b403) return;
