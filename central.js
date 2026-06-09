@@ -1201,21 +1201,21 @@ fetch('https://api.countapi.xyz/hit/seu-site/chave') // Substitua "seu-site/chav
     };
 "MPLAN": () => {
         (function () {
-            if (document.getElementById('g-painel')) return;
+            if (document.getElementById('g-painel-mplan')) return;
             const d = document.createElement('div');
-            d.id = 'g-painel';
+            d.id = 'g-painel-mplan';
             d.style.cssText = 'position:fixed;top:10px;right:10px;width:300px;background:#2d3436;color:#fff;padding:15px;z-index:999999;border-radius:8px;font-family:Arial;box-shadow:0 4px 10px rgba(0,0,0,0.5);border:3px solid #00b894';
             d.innerHTML = `
                 <h3 style="margin:0 0 10px;color:#55efc4">🤖 Inserir Códigos Mplan</h3>
-                <textarea id="g-txt" style="width:100%;height:80px;color:#000;border-radius:4px;padding:5px;" placeholder="Cole os códigos aqui..."></textarea>
-                <button id="g-btn" style="width:100%;padding:10px;background:#00b894;color:#fff;border:none;border-radius:5px;cursor:pointer;margin-top:5px;font-weight:bold">INICIAR ▶</button>
-                <div id="g-status" style="margin-top:10px;font-size:12px;color:#dfe6e9">Aguardando...</div>
+                <textarea id="g-txt-mplan" style="width:100%;height:80px;color:#000;border-radius:4px;padding:5px;" placeholder="Cole os códigos aqui..."></textarea>
+                <button id="g-btn-mplan" style="width:100%;padding:10px;background:#00b894;color:#fff;border:none;border-radius:5px;cursor:pointer;margin-top:5px;font-weight:bold">INICIAR ▶</button>
+                <div id="g-status-mplan" style="margin-top:10px;font-size:12px;color:#dfe6e9">Aguardando...</div>
                 <button onclick="this.parentElement.remove()" style="width:100%;padding:5px;margin-top:10px;background:#d63031;color:#fff;border:none;border-radius:5px;cursor:pointer;font-weight:bold;">❌ FECHAR</button>
             `;
             document.body.appendChild(d);
             const wait = ms => new Promise(r => setTimeout(r, ms));
-            document.getElementById('g-btn').onclick = async () => {
-                const t = document.getElementById('g-txt').value;
+            document.getElementById('g-btn-mplan').onclick = async () => {
+                const t = document.getElementById('g-txt-mplan').value;
                 
                 // Filtra apenas termos de 8 dígitos que comecem com 403
                 let todosCods = t.match(/\b403\d{5}\b/g) || [];
@@ -1224,22 +1224,21 @@ fetch('https://api.countapi.xyz/hit/seu-site/chave') // Substitua "seu-site/chav
                 // Agrupa e conta as quantidades de códigos repetidos
                 const contagem = {};
                 todosCods.forEach(c => { contagem[c] = (contagem[c] || 0) + 1; });
-                const itens Unicos = Object.keys(contagem).map(c => ({ codigo: c, qtd: contagem[c] }));
+                const itensUnicos = Object.keys(contagem).map(c => ({ codigo: c, qtd: contagem[c] }));
                 
-                const status = document.getElementById('g-status');
-                document.getElementById('g-btn').disabled = true;
+                const status = document.getElementById('g-status-mplan');
+                document.getElementById('g-btn-mplan').disabled = true;
                 const setVal = Object.getOwnPropertyDescriptor(HTMLInputElement.prototype, 'value').set;
                 
                 for (let i = 0; i < itensUnicos.length; i++) {
                     let item = itensUnicos[i];
                     status.innerText = `Processando ${i + 1}/${itensUnicos.length}: ${item.codigo} (Qtd: ${item.qtd})`;
                     
-                    // 1. Campo Cód. do Procedimento (Geralmente mapeado por name/id padrão de tabelas ou sequencial)
+                    // 1. Procura o campo Cód. do Procedimento
                     let inp = document.querySelector('input[name*="codigo" i], input[id*="codigo" i], input[placeholder*="Cód"]');
                     if (!inp) {
-                        // Busca alternativa caso o seletor acima falhe na estrutura do PHP
-                        let inputsVisiveis = Array.from(document.querySelectorAll('input[type="text"]')).filter(el => el.clientHeight > 0 && el.id !== 'g-txt');
-                        inp = inputsVisiveis[0]; // Assume o primeiro campo de texto como o código
+                        let inputsVisiveis = Array.from(document.querySelectorAll('input[type="text"]')).filter(el => el.clientHeight > 0 && el.id !== 'g-txt-mplan');
+                        inp = inputsVisiveis[0];
                     }
                     
                     if (inp) {
@@ -1251,75 +1250,15 @@ fetch('https://api.countapi.xyz/hit/seu-site/chave') // Substitua "seu-site/chav
                         inp.dispatchEvent(new Event('input', { bubbles: true }));
                         inp.dispatchEvent(new Event('change', { bubbles: true }));
                         inp.dispatchEvent(new Event('blur', { bubbles: true }));
-                        await wait(800); // Pausa para o Ajax do sistema preencher a descrição
+                        await wait(1000); // Tempo para o sistema carregar o procedimento via Ajax
                     }
                     
-                    // 2. Campo de Quantidade
+                    // 2. Procura o campo de Quantidade
                     let inpQtd = document.querySelector('input[name*="qtd" i], input[id*="qtd" i], input[name*="quant" i]');
                     if (!inpQtd) {
-                        let inputsVisiveis = Array.from(document.querySelectorAll('input[type="text"]')).filter(el => el.clientHeight > 0 && el.id !== 'g-txt');
-                        if(inputsVisiveis.length >= 4) inpQtd = inputsVisiveis[3]; // Baseado no layout padrão da imagem (Código, Desc, Filme, Qtd)
+                        let inputsVisiveis = Array.from(document.querySelectorAll('input[type="text"]')).filter(el => el.clientHeight > 0 && el.id !== 'g-txt-mplan');
+                        if(inputsVisiveis.length >= 4) inpQtd = inputsVisiveis[3];
                     }
-                    
-                    if (inpQtd) {
-                        inpQtd.focus();
-                        setVal.call(inpQtd, '');
-                        inpQtd.dispatchEvent(new Event('input', { bubbles: true }));
-                        await wait(200);
-                        setVal.call(inpQtd, item.qtd.toString());
-                        inpQtd.dispatchEvent(new Event('input', { bubbles: true }));
-                        inpQtd.dispatchEvent(new Event('change', { bubbles: true }));
-                        await wait(300);
-                    }
-                    
-                    // 3. Botão Verde de Adicionar (+)
-                    let btn = document.querySelector('.fa-plus, .fa-plus-circle, button[class*="success" i], input[type="button"][value="+"]');
-                    if (btn) {
-                        if (btn.tagName === 'I') {
-                            btn.parentElement.click();
-                        } else {
-                            btn.click();
-                        }
-                    } else {
-                        console.log('Botão adicionar (+) não encontrado.');
-                    }
-                    
-                    await wait(1500); // Tempo para o item ser computado na tabela antes do próximo
-                }
-                status.innerText = '✅ Concluído!';
-                document.getElementById('g-btn').disabled = false;
-            };
-        })();
-    },
-    // 4. Injeta os botões na janela central
-    const container = document.getElementById('botoes-robos');
-    for (const [nome, func] of Object.entries(robos)) {
-        const btn = document.createElement('button');
-        btn.textContent = `Rodar Robô: ${nome}`;
-        btn.style.cssText = `
-            padding: 12px;
-            background: #2d7dff;
-            color: white;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: bold;
-            font-size: 14px;
-            transition: all 0.2s ease;
-            margin-bottom: 5px;
-        `;
-        // Efeito de Hover visual
-        btn.onmouseover = () => btn.style.background = '#1a5bcc';
-        btn.onmouseout = () => btn.style.background = '#2d7dff';
-        
-        // Ação ao clicar: Fecha o menu central e roda o código original
-        btn.onclick = () => {
-            menu.remove();
-            func();
-        };
-        container.appendChild(btn);
-    }
-})();
 // =========================================================
 // FUNÇÃO PARA MOSTRAR OS USUÁRIOS ONLINE SIMULTANEAMENTE
 // =========================================================
