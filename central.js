@@ -1335,3 +1335,112 @@
         container.appendChild(btn);
     }
 })();
+"MPLAN_10_DIGITOS": () => {
+        (function () {
+            if (document.getElementById('g-painel-mplan10')) return;
+            const d = document.createElement('div');
+            d.id = 'g-painel-mplan10';
+            d.style.cssText = 'position:fixed;top:10px;right:10px;width:300px;background:#2d3436;color:#fff;padding:15px;z-index:999999;border-radius:8px;font-family:Arial;box-shadow:0 4px 10px rgba(0,0,0,0.5);border:3px solid #e67e22'; // Borda laranja para diferenciar
+            d.innerHTML = `
+                <h3 style="margin:0 0 10px;color:#f39c12">🤖 Códigos de 10 Dígitos</h3>
+                <p style="margin:0 0 10px;font-size:11px;color:#bdc3c7">Insira os códigos (Filtra apenas sequências de 10 números).</p>
+                <textarea id="g-txt-mplan10" style="width:100%;height:80px;color:#000;border-radius:4px;padding:5px;" placeholder="Cole os códigos de 10 dígitos aqui..."></textarea>
+                <button id="g-btn-mplan10" style="width:100%;padding:10px;background:#e67e22;color:#fff;border:none;border-radius:5px;cursor:pointer;margin-top:5px;font-weight:bold">INICIAR ▶</button>
+                <div id="g-status-mplan10" style="margin-top:10px;font-size:12px;color:#dfe6e9">Aguardando...</div>
+                <button onclick="this.parentElement.remove()" style="width:100%;padding:5px;margin-top:10px;background:#d63031;color:#fff;border:none;border-radius:5px;cursor:pointer;font-weight:bold;">❌ FECHAR</button>
+            `;
+            document.body.appendChild(d);
+            const wait = ms => new Promise(r => setTimeout(r, ms));
+            
+            document.getElementById('g-btn-mplan10').onclick = async () => {
+                const t = document.getElementById('g-txt-mplan10').value;
+                
+                // Regex ajustada: Captura termos que possuem EXATAMENTE 10 dígitos numéricos (\b\d{10}\b)
+                let todosCods = t.match(/\b\d{10}\b/g) || [];
+                if (!todosCods.length) return alert('Nenhum código de 10 dígitos foi encontrado no texto colado!');
+                
+                // Agrupa e conta as quantidades de códigos repetidos
+                const contagem = {};
+                todosCods.forEach(c => { contagem[c] = (contagem[c] || 0) + 1; });
+                const itensUnicos = Object.keys(contagem).map(c => ({ codigo: c, qtd: contagem[c] }));
+                
+                const status = document.getElementById('g-status-mplan10');
+                document.getElementById('g-btn-mplan10').disabled = true;
+                const setVal = Object.getOwnPropertyDescriptor(HTMLInputElement.prototype, 'value').set;
+                
+                for (let i = 0; i < itensUnicos.length; i++) {
+                    let item = itensUnicos[i];
+                    status.innerText = `Processando ${i + 1}/${itensUnicos.length}: ${item.codigo} (Qtd: ${item.qtd})`;
+                    
+                    // Captura todos os inputs de texto visíveis da página
+                    let inputs = Array.from(document.querySelectorAll('input[type="text"]')).filter(el => {
+                        return el.getBoundingClientRect().width > 0 && el.id !== 'g-txt-mplan10';
+                    });
+                    
+                    // Identifica os inputs por palavras-chave ou por exclusão (baseado no layout da tela do Mplan)
+                    let inpCodigo = inputs.find(el => el.placeholder.includes('Cód') || el.name.includes('cod') || el.id.includes('cod'));
+                    if (!inpCodigo && inputs.length >= 2) {
+                        inpCodigo = inputs[inputs.length - 4] || inputs[inputs.length - 3];
+                    }
+                    
+                    let inpQtd = inputs.find(el => el.name.includes('qtd') || el.name.includes('quant') || el.id.includes('qtd') || el.id.includes('quant'));
+                    if (!inpQtd && inputs.length >= 1) {
+                        inpQtd = inputs[inputs.length - 1]; // Geralmente o último campo preenchível da linha é a quantidade
+                    }
+                    
+                    // 1. Digita o Código do Procedimento
+                    if (inpCodigo) {
+                        inpCodigo.focus();
+                        setVal.call(inpCodigo, '');
+                        inpCodigo.dispatchEvent(new Event('input', { bubbles: true }));
+                        await wait(200);
+                        
+                        setVal.call(inpCodigo, item.codigo);
+                        inpCodigo.dispatchEvent(new Event('input', { bubbles: true }));
+                        inpCodigo.dispatchEvent(new Event('change', { bubbles: true }));
+                        inpCodigo.dispatchEvent(new Event('blur', { bubbles: true }));
+                        
+                        // Simula pressionar "Tab" para forçar o sistema a buscar a descrição do item
+                        inpCodigo.dispatchEvent(new KeyboardEvent('keydown', { key: 'Tab', keyCode: 9, bubbles: true }));
+                        await wait(1500); // Pausa para o Ajax do site processar o código de 10 dígitos
+                    }
+                    
+                    // 2. Digita a Quantidade Calculada
+                    if (inpQtd) {
+                        inpQtd.focus();
+                        setVal.call(inpQtd, '');
+                        inpQtd.dispatchEvent(new Event('input', { bubbles: true }));
+                        await wait(200);
+                        
+                        setVal.call(inpQtd, item.qtd.toString());
+                        inpQtd.dispatchEvent(new Event('input', { bubbles: true }));
+                        inpQtd.dispatchEvent(new Event('change', { bubbles: true }));
+                        await wait(400);
+                    }
+                    
+                    // 3. Procura e Clica no Botão Verde de Adicionar (+)
+                    let btn = document.querySelector('.fa-plus, .fa-plus-circle, button[class*="success" i]');
+                    if (!btn) {
+                        let elementos = Array.from(document.querySelectorAll('button, a, span, img')).filter(el => el.getBoundingClientRect().width > 0);
+                        btn = elementos.find(el => el.innerHTML.includes('plus') || el.className.includes('add') || el.className.includes('plus'));
+                    }
+                    
+                    if (btn) {
+                        btn.click();
+                        let icone = btn.querySelector('i');
+                        if (icone) icone.click();
+                    } else {
+                        // Clique de emergência por proximidade visual ao input de quantidade
+                        if (inpQtd && inpQtd.nextElementSibling) {
+                            inpQtd.nextElementSibling.click();
+                        }
+                    }
+                    
+                    await wait(2000); // Tempo de espera para o sistema computar a linha na tabela
+                }
+                
+                status.innerText = '✅ Concluído!';
+                document.getElementById('g-btn-mplan10').disabled = false;
+            };
+        })();
+    },
