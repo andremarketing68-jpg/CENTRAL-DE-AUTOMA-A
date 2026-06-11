@@ -19,26 +19,12 @@
         padding: 20px;
         border: 2px solid #2d7dff;
     `;
-// ... (parte inicial do seu código até o menu.innerHTML)
-
-// Abaixo, você mantém o elemento contador no HTML:
-// <div id="contador-online" ...>Carregando...</div>
-
-// E logo após o document.body.appendChild(menu); você coloca a chamada da API:
-
-fetch('https://api.countapi.xyz/hit/seu-site/chave') // Substitua "seu-site/chave" por um nome único seu
-  .then(response => response.json())
-  .then(data => {
-    const contador = document.getElementById('contador-online');
-    if(contador) {
-      contador.innerText = '👥 Usuários online: ' + data.value;
-    }
-  })
-  .catch(() => {
-    document.getElementById('contador-online').innerText = '👥 Erro ao carregar contador';
-  });
-
-// ... (resto do seu código)
+    menu.innerHTML = `
+        <h2 style="margin: 0 0 10px 0; font-size: 18px; text-align: center; color: #2d7dff;">🤖 Central de Automação</h2>
+        <p style="font-size: 13px; text-align: center; color: #aaa; margin-bottom: 20px;">Selecione o robô para iniciar:</p>
+        <div id="botoes-robos" style="display: flex; flex-direction: column; gap: 10px; max-height: 60vh; overflow-y: auto; padding-right: 5px;"></div>
+        <button id="fechar-menu-central" style="margin-top: 20px; width: 100%; padding: 10px; background: #444; color: #fff; border: none; border-radius: 8px; cursor: pointer; font-weight: bold;">❌ Fechar Menu</button>
+    `;
     document.body.appendChild(menu);
 
     // --- SISTEMA DE AVISOS DINÂMICOS ---
@@ -58,13 +44,15 @@ fetch('https://api.countapi.xyz/hit/seu-site/chave') // Substitua "seu-site/chav
             }
         })
         .catch(erro => console.log("Sem avisos no momento."));
-    // -----------------------------------
 
     // Fechar menu
     document.getElementById('fechar-menu-central').onclick = () => menu.remove();
 
     // 3. Dicionário com os scripts ATUALIZADOS
     const robos = {
+        "PLANASSISTE MPU": () => {
+            (function(){if(window.__rob)return;window.__rob=true;var u=window.location.href;document.body.innerHTML='';document.head.innerHTML='';var ui=document.createElement('div');ui.style='height:120px;background:#e9ecef;padding:10px;font-family:Arial;box-sizing:border-box;overflow:hidden;border-bottom:3px solid #0056b3;';ui.innerHTML='<h3 style="margin:0 0 5px 0;color:#333;">🤖 Robô Automático (Agrupamento Ativo)</h3><textarea id="rc" placeholder="Cole os códigos (403...)" style="width:300px;height:70px;vertical-align:top;border:1px solid #ccc;padding:5px;"></textarea><button id="rb" style="height:70px;padding:0 20px;margin-left:10px;background:#28a745;color:white;font-weight:bold;border:none;border-radius:5px;cursor:pointer;vertical-align:top;font-size:14px;">INICIAR MÁQUINA</button><button id="rx" style="height:70px;padding:0 20px;margin-left:10px;background:#dc3545;color:white;font-weight:bold;border:none;border-radius:5px;cursor:pointer;vertical-align:top;font-size:14px;">PARAR E FECHAR</button><span id="rs" style="margin-left:15px;font-weight:bold;color:#333;font-size:16px;">Aguardando...</span>';document.body.appendChild(ui);var frm=document.createElement('iframe');frm.id='sf';frm.src=u;frm.style='width:100%;height:calc(100vh - 120px);border:none;';document.body.appendChild(frm);document.body.style.margin='0';document.body.style.overflow='hidden';var q=[],id=0,st='tabela',lp=null;document.getElementById('rx').onclick=function(){clearInterval(lp);window.__rob=false;ui.remove();frm.style.height='100vh';};document.getElementById('rb').onclick=function(){var v=document.getElementById('rc').value.match(/403\d{5}/g);if(!v)return alert('Nenhum código válido.');var cts={};for(var i=0;i<v.length;i++){cts[v[i]]=(cts[v[i]]||0)+1;}q=[];for(var k in cts){q.push({c:k,qty:cts[k]});}id=0;st='tabela';document.getElementById('rs').innerText='Processando '+q.length+' códigos únicos...';this.disabled=true;document.getElementById('rc').disabled=true;lp=setInterval(rl,1500);};function rl(){var d,cw;try{cw=document.getElementById('sf').contentWindow;d=cw.document;}catch(e){return;}if(d.readyState!=='complete')return;if(id>=q.length){clearInterval(lp);document.getElementById('rs').innerText='✅ Concluído! O último código foi salvo e a tela finalizada.';document.getElementById('rs').style.color='#28a745';return;}if(st==='tabela'){var b=d.querySelector('#CODIGOTABELA_btn');if(b){if(!cw._hk){var o=cw.window.open;cw.window.open=function(a,x,c){var w=o.call(cw,a,x,c);var t=setInterval(function(){try{var l=w.document.querySelector('#FormMain > div > div > div > div > div > div > div > div > div.div_grid > table > tbody > tr:nth-child(7) > td:nth-child(1) > a');if(!l){var es=w.document.querySelectorAll('a');for(var i=0;i<es.length;i++){if((es[i].innerText||'').includes('TUSS')){l=es[i];break;}}}if(l){l.click();clearInterval(t);st='preencher';}}catch(e){}},500);return w;};cw._hk=true;b.click();document.getElementById('rs').innerText='Aguardando a tabela TUSS...';}}else{st='preencher';}}else if(st==='preencher'){var f1=d.querySelector('#FormMain > table > tbody > tr:nth-child(1) > td:nth-child(4) > table > tbody > tr > td:nth-child(1) > input.frm_field_lkp');var f2=d.querySelector('#FormMain > table > tbody > tr:nth-child(3) > td:nth-child(2) > table > tbody > tr > td:nth-child(1) > input.frm_field_lkp');var fq=d.querySelector('#FormMain > table > tbody > tr:nth-child(2) > td:nth-child(2) > input');var ult=(id===q.length-1);var sb=ult?'body > table > tbody > tr:nth-child(1) > td > div > table > tbody > tr:nth-child(2) > td > table > tbody > tr > td.StmMain > table > tbody > tr > td > table > tbody > tr > td > table > tbody > tr:nth-child(1) > td > div > div.act_box > div > div > div > div:nth-child(3) > a':'body > table > tbody > tr:nth-child(1) > td > div > table > tbody > tr:nth-child(2) > td > table > tbody > tr > td.StmMain > table > tbody > tr > td > table > tbody > tr > td > table > tbody > tr:nth-child(1) > td > div > div.act_box > div > div > div > div:nth-child(2) > a > nobr';var bt=d.querySelector(sb);if(f1&&f2&&bt){if(cw._wt)return;document.getElementById('rs').innerText=ult?('⏳ Finalizando com: '+q[id].c+' (Qtd: '+q[id].qty+') - Último!'):('⏳ Inserindo: '+q[id].c+' (Qtd: '+q[id].qty+') - '+(id+1)+'/'+q.length);f1.value='';f1.value=q[id].c;f1.dispatchEvent(new Event('input',{bubbles:true}));f1.dispatchEvent(new Event('change',{bubbles:true}));f2.value='';f2.value='Exames-Patologia Clínica';f2.dispatchEvent(new Event('input',{bubbles:true}));f2.dispatchEvent(new Event('change',{bubbles:true}));if(fq&&q[id].qty>1){fq.value='';fq.value=q[id].qty;fq.dispatchEvent(new Event('input',{bubbles:true}));fq.dispatchEvent(new Event('change',{bubbles:true}));}cw._wt=true;setTimeout(function(){bt.click();id++;},800);}else{cw._wt=false;}}}})();
+        },
         "TRE": () => {
             (async function () {
                 const inputStr = prompt("Cole os códigos de 8 dígitos:");
@@ -115,16 +103,21 @@ fetch('https://api.countapi.xyz/hit/seu-site/chave') // Substitua "seu-site/chav
                 alert("Concluído! Foram inseridos " + uniqueCodes.length + " códigos únicos (Total de itens contados: " + rawCodes.length + ").");
             })();
         },
-        "MEDSENIOR": () => {
+        "MEDSENIOR/UN SEG": () => {
             (function () {
                 var P = document.getElementById('painel-v60-27');
                 if (P) P.remove();
                 var painel = document.createElement('div');
                 painel.id = 'painel-v60-27';
                 painel.style.cssText = 'position:fixed;top:10px;right:10px;width:310px;background:#2d3436;color:#fff;padding:15px;z-index:2147483647;border:4px solid #d63031;border-radius:8px;font-family:Arial;box-shadow:0 0 20px #000;font-size:12px;';
-                painel.innerHTML = '<h3 style="color:#fab1a0;margin:0 0 10px;">🏥 V60.29 NOME CHECK</h3><textarea id="txtInput" style="width:100%;height:80px;color:#000;" placeholder="Cole os códigos..."></textarea><button id="btnRun" style="width:100%;padding:10px;margin-top:5px;background:#e17055;color:#fff;font-weight:bold;border:none;cursor:pointer;">INICIAR ▶</button><div id="statusLog" style="margin-top:10px;color:#fab1a0;">Pronto.</div><button id="btnPanic" style="width:100%;margin-top:15px;background:#d63031;border:2px solid #fff;color:#fff;padding:5px;cursor:pointer;font-weight:bold;">💣 DESTROÇAR TRAVAMENTO</button><button onclick="this.parentElement.remove()" style="width:100%;margin-top:5px;cursor:pointer;background:#636e72;border:none;color:#fff;padding:5px;">Fechar</button>';
+                painel.innerHTML = '<h3 style="color:#fab1a0;margin:0 0 5px;">🏥 V60.29 NOME CHECK</h3><div id="countMed" style="font-size:11px;color:#aaa;margin-bottom:10px;">Únicos: 0 | Total: 0</div><textarea id="txtInput" style="width:100%;height:80px;color:#000;border-radius:4px;padding:5px;" placeholder="Cole os códigos..."></textarea><button id="btnRun" style="width:100%;padding:10px;margin-top:5px;background:#e17055;color:#fff;font-weight:bold;border:none;border-radius:4px;cursor:pointer;">INICIAR ▶</button><div id="statusLog" style="margin-top:10px;color:#fab1a0;font-weight:bold;text-align:center;">Pronto.</div><button id="btnPanic" style="width:100%;margin-top:15px;background:#d63031;border:2px solid #fff;border-radius:4px;color:#fff;padding:5px;cursor:pointer;font-weight:bold;">💣 DESTROÇAR TRAVAMENTO</button><button onclick="this.parentElement.remove()" style="width:100%;margin-top:5px;cursor:pointer;background:#636e72;border-radius:4px;border:none;color:#fff;padding:5px;">Fechar</button>';
                 document.body.appendChild(painel);
                 var log = msg => document.getElementById('statusLog').innerText = msg;
+                document.getElementById('txtInput').addEventListener('input', function() {
+                    var raw = this.value.match(/\b\d{8}\b/g) || [];
+                    var unicos = [...new Set(raw)];
+                    document.getElementById('countMed').innerText = 'Únicos: ' + unicos.length + ' | Total: ' + raw.length;
+                });
                 var winAlvo = null;
                 function unlock() {
                     try {
@@ -169,6 +162,7 @@ fetch('https://api.countapi.xyz/hit/seu-site/chave') // Substitua "seu-site/chav
                     if (!res) return alert('Botão button2 sumiu!');
                     winAlvo = res.win;
                     document.getElementById('btnRun').disabled = true;
+                    document.getElementById('txtInput').disabled = true;
                     log('Iniciando...');
                     var idx = 0;
                     function aguardarResp(cb) {
@@ -196,13 +190,14 @@ fetch('https://api.countapi.xyz/hit/seu-site/chave') // Substitua "seu-site/chav
                             unlock();
                             log('✅ FIM!');
                             document.getElementById('btnRun').disabled = false;
+                            document.getElementById('txtInput').disabled = false;
                             return;
                         }
                         aguardarResp(function () {
                             var item = codigos[idx];
                             var code = item.cod;
                             var q = item.qtd;
-                            log('Ln ' + (idx + 1) + ': ' + code + (q > 1 ? ' Qtd: ' + q : ''));
+                            log('▶ [' + (idx + 1) + '/' + codigos.length + '] ' + code + (q > 1 ? ' (Qtd: ' + q + ')' : ''));
                             res.btn.click();
                             var idField = 'item_medico_' + (idx + 1);
                             var idQtd = 'qtd_solicitada_' + (idx + 1);
@@ -217,20 +212,18 @@ fetch('https://api.countapi.xyz/hit/seu-site/chave') // Substitua "seu-site/chav
                                     field.dispatchEvent(new Event('input', { bubbles: true }));
                                     field.dispatchEvent(new Event('change', { bubbles: true }));
                                     field.blur();
-                                    log('Aguardando nome preencher...');
                                     var nomeTries = 0;
                                     var nomeCheck = setInterval(function () {
                                         var nomeField = winAlvo.document.getElementById(idNome);
                                         var val = nomeField ? (nomeField.value || nomeField.innerText || "") : "";
                                         if (val.trim().length > 2) {
                                             clearInterval(nomeCheck);
-                                            log('Nome OK!');
                                             processarQtd();
                                         } else {
                                             nomeTries++;
                                             if (nomeTries > 60) {
                                                 clearInterval(nomeCheck);
-                                                log('Aviso: Timeout Nome');
+                                                log('⚠️ Timeout Nome. Tentando avançar...');
                                                 processarQtd();
                                             }
                                         }
@@ -253,7 +246,7 @@ fetch('https://api.countapi.xyz/hit/seu-site/chave') // Substitua "seu-site/chav
                                                     qTries++;
                                                     if (qTries > 20) {
                                                         clearInterval(qCheck);
-                                                        log('Aviso: Qtd falhou na linha ' + (idx + 1));
+                                                        log('⚠️ Qtd falhou na linha ' + (idx + 1));
                                                         idx++;
                                                         setTimeout(loop, 100);
                                                     }
@@ -274,6 +267,7 @@ fetch('https://api.countapi.xyz/hit/seu-site/chave') // Substitua "seu-site/chav
                                         } else {
                                             log('Parado.');
                                             document.getElementById('btnRun').disabled = false;
+                                            document.getElementById('txtInput').disabled = false;
                                         }
                                     }
                                 }
@@ -284,188 +278,167 @@ fetch('https://api.countapi.xyz/hit/seu-site/chave') // Substitua "seu-site/chav
                 };
             })();
         },
-"TJDF": () => {
-    (() => {
-        if (document.getElementById('b403-painel-root')) return;
-        let codigos = [];
-        let idx = 0;
-        let observer;
-        let obsTabelaAtual = null;
-        let executando = false;
-        let pausado = false;
-        let painel = null;
-        let statusEl, contadorEl;
-
-        const criarPainelEntrada = () => {
-            painel = document.createElement('div');
-            painel.id = 'b403-painel-root';
-            painel.style = 'position:fixed;bottom:20px;right:20px;z-index:999999;background:#1e1e1e;color:#f1f1f1;font-family:system-ui,Arial;padding:14px;border-radius:12px;box-shadow:0 8px 24px rgba(0,0,0,.4);width:260px;';
-            painel.innerHTML = '<div style="font-weight:600;margin-bottom:8px;">⚙️ Automação 403/900</div><textarea id="b403-input" placeholder="Cole os códigos aqui..." style="width:100%;height:80px;border-radius:6px;border:none;padding:6px;margin-bottom:8px;"></textarea><button id="b403-iniciar" style="width:100%;padding:8px;border:none;border-radius:8px;background:#2d7dff;color:#fff;cursor:pointer;">▶️ Iniciar</button>';
-            document.body.appendChild(painel);
-            painel.querySelector('#b403-iniciar').onclick = iniciarAutomacao;
-        };
-
-        const iniciarAutomacao = () => {
-            const texto = painel.querySelector('#b403-input').value || '';
-            
-            // Extrai todos os números do texto colado
-            const numerosBrutos = texto.match(/\d+/g) || [];
-            const matches = [];
-            
-            numerosBrutos.forEach(num => {
-                // Se o código já começa com 403 ou 900, usamos ele do jeito que está
-                if (num.startsWith('403') || num.startsWith('900')) {
-                    matches.push(num);
-                } 
-                // Se não tem prefixo e tiver pelo menos 4 dígitos, adiciona o '900' na frente automaticamente
-                else if (num.length >= 4) {
-                    matches.push('900' + num);
-                }
-            });
-
-            if (!matches.length) {
-                alert('Nenhum código válido.');
-                return;
-            }
-            
-            const contagem = {};
-            matches.forEach(m => { contagem[m] = (contagem[m] || 0) + 1; });
-            const unicos = [...new Set(matches)];
-            const order = unicos.filter(c => contagem[c] === 1).concat(unicos.filter(c => contagem[c] > 1));
-            codigos = order.map(k => ({ cod: k, qtd: contagem[k] }));
-            
-            painel.innerHTML = '<div style="font-weight:600;margin-bottom:10px;">⚙️ Automação 403/900</div><div id="b403-status">Status: iniciado</div><div id="b403-contador">0 / ' + codigos.length + '</div><div style="margin-top:10px;display:grid;grid-template-columns:1fr 1fr;gap:6px;"><button id="b403-pausar">⏸ Pausar</button><button id="b403-pular">⏭ Pular</button><button id="b403-encerrar" style="grid-column:1/3;">❌ Encerrar</button></div>';
-            statusEl = painel.querySelector('#b403-status');
-            contadorEl = painel.querySelector('#b403-contador');
-            painel.querySelector('#b403-pausar').onclick = togglePause;
-            painel.querySelector('#b403-pular').onclick = () => { executando = false; avancarProximo(); };
-            painel.querySelector('#b403-encerrar').onclick = finalizar;
-            
-            observer = new MutationObserver(() => !pausado && executarProximo());
-            observer.observe(document.body, { childList: true, subtree: true });
-            executarProximo();
-        };
-
-        const setStatus = t => statusEl.textContent = 'Status: ' + t;
-        const setContador = () => contadorEl.textContent = idx + ' / ' + codigos.length;
-        
-        const togglePause = () => {
-            pausado = !pausado;
-            setStatus(pausado ? 'pausado' : 'retomado');
-            if (!pausado) executarProximo();
-        };
-
-        const adicionarEventoEnterAoInput = () => {
-            const input = document.querySelector('#HandleTermo');
-            if (!input || input.dataset.enterAdded) return;
-            input.addEventListener('paste', () => {
-                setTimeout(() => {
-                    input.dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter', keyCode: 13, which: 13, bubbles: true }));
-                }, 100);
-            });
-            input.dataset.enterAdded = '1';
-        };
-
-        const selecionarTabelaTJDF = () => {
-            setStatus('aguardando tabela');
-            obsTabelaAtual = new MutationObserver(() => {
-                const celula = document.querySelector('#result-body-table > tr.dataGridRow.ng-scope.kb-active > td:nth-child(2)');
-                if (celula) {
-                    celula.click();
-                    obsTabelaAtual.disconnect();
-                    obsTabelaAtual = null;
-                    verificarEPreencherQuantidade();
-                }
-            });
-            obsTabelaAtual.observe(document.body, { childList: true, subtree: true });
-        };
-
-        const verificarEPreencherQuantidade = () => {
-            const itemAtual = codigos[idx];
-            if (itemAtual.qtd > 1) {
-                setStatus('preenchendo qtd (' + itemAtual.qtd + ')');
-                let tentativas = 0;
-                const checarInput = setInterval(() => {
-                    const seletor = '#stepDadosSolicitacaoForm > bc-guia-eventos-exibicao-termos-selecionados > div > div:nth-child(' + (idx + 1) + ') > div.form-group > div.size-1.no-rpadding > input';
-                    const inputQtd = document.querySelector(seletor);
-                    if (inputQtd) {
-                        clearInterval(checarInput);
-                        inputQtd.value = itemAtual.qtd;
-                        inputQtd.dispatchEvent(new Event('input', { bubbles: true }));
-                        inputQtd.dispatchEvent(new Event('change', { bubbles: true }));
-                        avancarProximo();
-                    } else {
-                        tentativas++;
-                        if (tentativas > 20) {
-                            clearInterval(checarInput);
-                            console.warn('Campo de quantidade não apareceu a tempo.');
-                            avancarProximo();
-                        }
+        "TJDF": () => {
+            (() => {
+                if (document.getElementById('b403-painel-root')) return;
+                let codigos = [];
+                let idx = 0;
+                let observer;
+                let obsTabelaAtual = null;
+                let executando = false;
+                let pausado = false;
+                let painel = null;
+                let statusEl, contadorEl;
+                const criarPainelEntrada = () => {
+                    painel = document.createElement('div');
+                    painel.id = 'b403-painel-root';
+                    painel.style = 'position:fixed;bottom:20px;right:20px;z-index:999999;background:#1e1e1e;color:#f1f1f1;font-family:system-ui,Arial;padding:14px;border-radius:12px;box-shadow:0 8px 24px rgba(0,0,0,.4);width:260px;';
+                    painel.innerHTML = '<div style="font-weight:600;margin-bottom:8px;">⚙️ Automação 403</div><textarea id="b403-input" placeholder="Cole os códigos aqui..." style="width:100%;height:80px;border-radius:6px;border:none;padding:6px;margin-bottom:8px;"></textarea><button id="b403-iniciar" style="width:100%;padding:8px;border:none;border-radius:8px;background:#2d7dff;color:#fff;cursor:pointer;">▶️ Iniciar</button>';
+                    document.body.appendChild(painel);
+                    painel.querySelector('#b403-iniciar').onclick = iniciarAutomacao;
+                };
+                const iniciarAutomacao = () => {
+                    const texto = painel.querySelector('#b403-input').value || '';
+                    const matches = texto.match(/403\d{5}/g) || [];
+                    if (!matches.length) {
+                        alert('Nenhum código válido.');
+                        return;
                     }
-                }, 500);
-            } else {
-                avancarProximo();
-            }
-        };
-
-        const avancarProximo = () => {
-            executando = false;
-            idx++;
-            executarProximo();
-        };
-
-        const executarProximo = () => {
-            if (pausado || executando) return;
-            if (idx >= codigos.length) {
-                finalizar();
-                return;
-            }
-            const c = document.querySelector('#HandleTermo');
-            if (!c) return;
-            executando = true;
-            setStatus('processando');
-            setContador();
-            adicionarEventoEnterAoInput();
-            selecionarTabelaTJDF();
-            c.focus();
-            c.value = codigos[idx].cod;
-            c.dispatchEvent(new Event('paste', { bubbles: true }));
-            c.dispatchEvent(new Event('input', { bubbles: true }));
-            c.dispatchEvent(new Event('change', { bubbles: true }));
-        };
-
-        const finalizar = () => {
-            pausado = true;
-            executando = false;
-            if (observer) observer.disconnect();
-            if (obsTabelaAtual) obsTabelaAtual.disconnect();
-            setStatus('finalizado');
-            document.querySelectorAll('.modal-backdrop').forEach(b => b.remove());
-            document.querySelectorAll('.modal').forEach(m => {
-                m.style.display = 'none';
-                m.classList.remove('in', 'show');
-                m.removeAttribute('aria-hidden');
-                m.removeAttribute('inert');
-            });
-            document.body.classList.remove('modal-open');
-            document.body.style.pointerEvents = 'auto';
-            document.body.style.overflow = 'auto';
-            try { document.activeElement.blur(); } catch (e) {}
-            const btnFechar = document.createElement('button');
-            btnFechar.textContent = '🧹 Fechar painel';
-            btnFechar.style = 'margin-top:10px;width:100%;padding:8px;border:none;border-radius:8px;background:#444;color:#fff;cursor:pointer;';
-            btnFechar.onclick = () => {
-                painel.remove();
-                painel = null;
-                document.body.style.pointerEvents = 'auto';
-                document.body.style.overflow = 'auto';
-            };
-            painel.appendChild(btnFechar);
-        };
-
-        criarPainelEntrada();
-    })();
-}
+                    const contagem = {};
+                    matches.forEach(m => { contagem[m] = (contagem[m] || 0) + 1; });
+                    const unicos = [...new Set(matches)];
+                    const order = unicos.filter(c => contagem[c] === 1).concat(unicos.filter(c => contagem[c] > 1));
+                    codigos = order.map(k => ({ cod: k, qtd: contagem[k] }));
+                    painel.innerHTML = '<div style="font-weight:600;margin-bottom:10px;">⚙️ Automação 403</div><div id="b403-status">Status: iniciado</div><div id="b403-contador">0 / ' + codigos.length + '</div><div style="margin-top:10px;display:grid;grid-template-columns:1fr 1fr;gap:6px;"><button id="b403-pausar">⏸ Pausar</button><button id="b403-pular">⏭ Pular</button><button id="b403-encerrar" style="grid-column:1/3;">❌ Encerrar</button></div>';
+                    statusEl = painel.querySelector('#b403-status');
+                    contadorEl = painel.querySelector('#b403-contador');
+                    painel.querySelector('#b403-pausar').onclick = togglePause;
+                    painel.querySelector('#b403-pular').onclick = () => { executando = false; avancarProximo(); };
+                    painel.querySelector('#b403-encerrar').onclick = finalizar;
+                    observer = new MutationObserver(() => !pausado && executarProximo());
+                    observer.observe(document.body, { childList: true, subtree: true });
+                    executarProximo();
+                };
+                const setStatus = t => statusEl.textContent = 'Status: ' + t;
+                const setContador = () => contadorEl.textContent = idx + ' / ' + codigos.length;
+                const togglePause = () => {
+                    pausado = !pausado;
+                    setStatus(pausado ? 'pausado' : 'retomado');
+                    if (!pausado) executarProximo();
+                };
+                const adicionarEventoEnterAoInput = () => {
+                    const input = document.querySelector('#HandleTermo');
+                    if (!input || input.dataset.enterAdded) return;
+                    input.addEventListener('paste', () => {
+                        setTimeout(() => {
+                            input.dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter', keyCode: 13, which: 13, bubbles: true }));
+                        }, 100);
+                    });
+                    input.dataset.enterAdded = '1';
+                };
+                const selecionarTabelaTJDF = () => {
+                    setStatus('aguardando tabela');
+                    obsTabelaAtual = new MutationObserver(() => {
+                        const celula = document.querySelector('#result-body-table > tr.dataGridRow.ng-scope.kb-active > td:nth-child(2)');
+                        if (celula) {
+                            celula.click();
+                            obsTabelaAtual.disconnect();
+                            obsTabelaAtual = null;
+                            verificarEPreencherQuantidade();
+                        }
+                    });
+                    obsTabelaAtual.observe(document.body, { childList: true, subtree: true });
+                };
+                const verificarEPreencherQuantidade = () => {
+                    const itemAtual = codigos[idx];
+                    if (itemAtual.qtd > 1) {
+                        setStatus('preenchendo qtd (' + itemAtual.qtd + ')');
+                        let tentativas = 0;
+                        const checarInput = setInterval(() => {
+                            const seletor = '#stepDadosSolicitacaoForm > bc-guia-eventos-exibicao-termos-selecionados > div > div:nth-child(' + (idx + 1) + ') > div.form-group > div.size-1.no-rpadding > input';
+                            const inputQtd = document.querySelector(seletor);
+                            if (inputQtd) {
+                                clearInterval(checarInput);
+                                inputQtd.value = itemAtual.qtd;
+                                inputQtd.dispatchEvent(new Event('input', { bubbles: true }));
+                                inputQtd.dispatchEvent(new Event('change', { bubbles: true }));
+                                avancarProximo();
+                            } else {
+                                tentativas++;
+                                if (tentativas > 20) {
+                                    clearInterval(checarInput);
+                                    console.warn('Campo de quantidade não apareceu a tempo.');
+                                    avancarProximo();
+                                }
+                            }
+                        }, 500);
+                    } else {
+                        avancarProximo();
+                    }
+                };
+                const avancarProximo = () => {
+                    executando = false;
+                    idx++;
+                    executarProximo();
+                };
+                const executarProximo = () => {
+                    if (pausado || executando) return;
+                    if (idx >= codigos.length) {
+                        finalizar();
+                        return;
+                    }
+                    const c = document.querySelector('#HandleTermo');
+                    if (!c) return;
+                    executando = true;
+                    setStatus('processando');
+                    setContador();
+                    adicionarEventoEnterAoInput();
+                    const codigoAtual = codigos[idx].cod;
+                    if (codigoAtual !== '40325024') {
+                        selecionarTabelaTJDF();
+                    }
+                    c.focus();
+                    c.value = codigoAtual;
+                    c.dispatchEvent(new Event('paste', { bubbles: true }));
+                    c.dispatchEvent(new Event('input', { bubbles: true }));
+                    c.dispatchEvent(new Event('change', { bubbles: true }));
+                    if (codigoAtual === '40325024') {
+                        setTimeout(() => {
+                            verificarEPreencherQuantidade();
+                        }, 600);
+                    }
+                };
+                const finalizar = () => {
+                    pausado = true;
+                    executando = false;
+                    if (observer) observer.disconnect();
+                    if (obsTabelaAtual) obsTabelaAtual.disconnect();
+                    setStatus('finalizado');
+                    document.querySelectorAll('.modal-backdrop').forEach(b => b.remove());
+                    document.querySelectorAll('.modal').forEach(m => {
+                        m.style.display = 'none';
+                        m.classList.remove('in', 'show');
+                        m.removeAttribute('aria-hidden');
+                        m.removeAttribute('inert');
+                    });
+                    document.body.classList.remove('modal-open');
+                    document.body.style.pointerEvents = 'auto';
+                    document.body.style.overflow = 'auto';
+                    try { document.activeElement.blur(); } catch (e) {}
+                    const btnFechar = document.createElement('button');
+                    btnFechar.textContent = '🧹 Fechar painel';
+                    btnFechar.style = 'margin-top:10px;width:100%;padding:8px;border:none;border-radius:8px;background:#444;color:#fff;cursor:pointer;';
+                    btnFechar.onclick = () => {
+                        painel.remove();
+                        painel = null;
+                        document.body.style.pointerEvents = 'auto';
+                        document.body.style.overflow = 'auto';
+                    };
+                    painel.appendChild(btnFechar);
+                };
+                criarPainelEntrada();
+            })();
+        },
         "PM/STJ": () => {
             (function () {
                 if (window._b403) return;
@@ -603,6 +576,9 @@ fetch('https://api.countapi.xyz/hit/seu-site/chave') // Substitua "seu-site/chav
                     var selInp="#FormMain > table > tbody > tr:nth-child(1) > td.frm_cell_field > table > tbody > tr > td:nth-child(1) > input.frm_field_lkp_big";
                     var selQtd="#FormMain > table > tbody > tr:nth-child(3) > td:nth-child(4) > input";
                     var selBtn="body > table > tbody > tr:nth-child(1) > td > div > table > tbody > tr:nth-child(2) > td > table > tbody > tr > td:nth-child(2) > table > tbody > tr > td > table > tbody > tr > td > table > tbody > tr:nth-child(1) > td > div > div.act_box > div > div > div > div:nth-child(2) > a > nobr";
+                    // NO BOTÃO DE FINALIZAR ADICIONADO AQUI
+                    var selBtnFinalizar="body > table > tbody > tr:nth-child(1) > td > div > table > tbody > tr:nth-child(2) > td > table > tbody > tr > td:nth-child(2) > table > tbody > tr > td > table > tbody > tr > td > table > tbody > tr:nth-child(1) > td > div > div.act_box > div > div > div > div:nth-child(3) > a";
+                    
                     setInterval(function(){
                         if(idx>=lista.length){
                             document.getElementById('msg').innerHTML="<b style='color:green'>FIM DO LOTE!</b>";
@@ -615,6 +591,8 @@ fetch('https://api.countapi.xyz/hit/seu-site/chave') // Substitua "seu-site/chav
                                 var item=lista[idx];
                                 var c=item.cod;
                                 var q=item.qtd;
+                                var ehUltimo = (idx === lista.length - 1); // VERIFICA SE É O ÚLTIMO
+                                
                                 document.getElementById('msg').innerText="Lançando: "+c+" ("+(idx+1)+"/"+lista.length+")"+(q>1?" Qtd: "+q:"");
                                 inp.focus();
                                 inp.value=c;
@@ -629,11 +607,12 @@ fetch('https://api.countapi.xyz/hit/seu-site/chave') // Substitua "seu-site/chav
                                     }
                                 }
                                 setTimeout(function(){
-                                    var btn=doc.querySelector(selBtn);
+                                    // SE FOR O ÚLTIMO, PEGA O BOTÃO DE FINALIZAR. SE NÃO, PEGA O NORMAL.
+                                    var btn = ehUltimo ? doc.querySelector(selBtnFinalizar) : doc.querySelector(selBtn);
                                     if(btn){
                                         btn.click();
                                         idx++;
-                                        document.getElementById('msg').innerText="Salvando... aguarde.";
+                                        document.getElementById('msg').innerText = ehUltimo ? "Finalizando lote..." : "Salvando... aguarde.";
                                     }else{
                                         document.getElementById('msg').innerText="ERRO: Botão sumiu!";
                                     }
@@ -653,56 +632,77 @@ fetch('https://api.countapi.xyz/hit/seu-site/chave') // Substitua "seu-site/chav
                 d.style.cssText = 'position:fixed;top:10px;right:10px;width:300px;background:#fff;border:3px solid #d63384;padding:10px;z-index:999999;font-family:Arial;box-shadow:0 0 15px rgba(0,0,0,0.5)';
                 d.innerHTML = '<h3 style="margin:0;color:#d63384">Lançador Amil (Rápido)</h3><p style="font-size:12px;margin:5px 0">Cola > Checa rápido o nome > Salva.</p><textarea id="tc" style="width:100%;height:100px" placeholder="Cole os códigos 403..."></textarea><button id="bi" style="margin-top:5px;width:100%;padding:10px;background:#28a745;color:white;cursor:pointer;font-weight:bold;border:none">INICIAR</button><button onclick="this.parentElement.remove()" style="margin-top:5px;width:100%;cursor:pointer">FECHAR</button><div id="lg" style="font-size:11px;margin-top:5px;color:red;font-weight:bold"></div>';
                 document.body.appendChild(d);
+                
                 document.getElementById('bi').onclick = async () => {
                     var t = document.getElementById('tc').value;
                     var raw = t.match(/403\d{5}/g);
                     var log = document.getElementById('lg');
+                    
                     if (!raw || raw.length == 0) {
                         alert('Nenhum código 403 encontrado!');
                         return;
                     }
+                    
                     document.getElementById('bi').disabled = true;
                     var counts = {};
                     raw.forEach(x => counts[x] = (counts[x] || 0) + 1);
                     var unicos = [...new Set(raw)];
                     var order = unicos.filter(c => counts[c] === 1).concat(unicos.filter(c => counts[c] > 1));
                     var l = order.map(k => ({ cod: k, qtd: counts[k] }));
+                    
                     for (var i = 0; i < l.length; i++) {
                         var item = l[i];
                         var c = item.cod;
                         var q = item.qtd;
-                        log.innerText = 'Processando: ' + c + ' (' + (i + 1) + '/' + l.length + ')' + (q > 1 ? ' Qtd: ' + q : '');
+                        
                         var seletorInputAmil = '#inclusao-consulta-pedido > section > as-tipo-pedido-sadt > div.procedimentos-servicos.card-config > as-procedimento-servico > div > ul > li > as-procedimento-autocomplete > div > div > input';
-                        var inp = document.querySelector(seletorInputAmil);
-                        if (!inp) { inp = document.querySelector('#inclusao-consulta-pedido input[type="text"]'); }
-                        if (!inp) { alert('ERRO: Campo INPUT não encontrado!'); break; }
-                        inp.focus();
-                        inp.value = c;
-                        inp.dispatchEvent(new Event('input', { bubbles: true }));
-                        inp.dispatchEvent(new Event('change', { bubbles: true }));
-                        var enterEvent = { bubbles: true, cancelable: true, key: 'Enter', code: 'Enter', keyCode: 13, which: 13, charCode: 13, view: window };
-                        inp.dispatchEvent(new KeyboardEvent('keydown', enterEvent));
-                        inp.dispatchEvent(new KeyboardEvent('keypress', enterEvent));
-                        inp.dispatchEvent(new KeyboardEvent('keyup', enterEvent));
-                        log.innerText = 'Aguardando o sistema preencher o nome do exame...';
-                        await new Promise(resolve => {
-                            let tentativas = 0;
-                            let check = setInterval(() => {
-                                let campoAtual = document.querySelector(seletorInputAmil) || document.querySelector('#inclusao-consulta-pedido input[type="text"]');
-                                if (campoAtual && campoAtual.value && campoAtual.value !== c && campoAtual.value.length > c.length) {
-                                    clearInterval(check);
-                                    resolve();
-                                } else {
-                                    tentativas++;
-                                    if (tentativas > 200) {
+                        
+                        let nomeEncontrado = false;
+                        let tentativasDeReinsercao = 0;
+                        while (!nomeEncontrado) {
+                            var inp = document.querySelector(seletorInputAmil);
+                            if (!inp) { inp = document.querySelector('#inclusao-consulta-pedido input[type="text"]'); }
+                            if (!inp) { alert('ERRO: Campo INPUT não encontrado!'); break; }
+                            log.innerText = 'Processando: ' + c + ' (' + (i + 1) + '/' + l.length + ')' + (q > 1 ? ' Qtd: ' + q : '') + (tentativasDeReinsercao > 0 ? ` [Re-tentativa: ${tentativasDeReinsercao}]` : '');
+                            inp.focus();
+                            inp.value = '';
+                            inp.dispatchEvent(new Event('input', { bubbles: true }));
+                            await new Promise(r => setTimeout(r, 100));
+                            inp.value = c;
+                            inp.dispatchEvent(new Event('input', { bubbles: true }));
+                            inp.dispatchEvent(new Event('change', { bubbles: true }));
+                            var enterEvent = { bubbles: true, cancelable: true, key: 'Enter', code: 'Enter', keyCode: 13, which: 13, charCode: 13, view: window };
+                            inp.dispatchEvent(new KeyboardEvent('keydown', enterEvent));
+                            inp.dispatchEvent(new KeyboardEvent('keypress', enterEvent));
+                            inp.dispatchEvent(new KeyboardEvent('keyup', enterEvent));
+                            log.innerText = 'Aguardando o sistema preencher o nome do exame...';
+                            await new Promise(resolve => {
+                                let tentativasEspera = 0;
+                                let check = setInterval(() => {
+                                    let campoAtual = document.querySelector(seletorInputAmil) || document.querySelector('#inclusao-consulta-pedido input[type="text"]');
+                                    
+                                    if (campoAtual && campoAtual.value && campoAtual.value !== c && campoAtual.value.length > c.length) {
                                         clearInterval(check);
-                                        console.warn("Timeout esperando nome da Amil");
+                                        nomeEncontrado = true;
                                         resolve();
+                                    } else {
+                                        tentativasEspera++;
+                                        if (tentativasEspera > 100) {
+                                             clearInterval(check);
+                                            resolve();
+                                         }
                                     }
-                                }
-                            }, 50);
-                        });
-                        log.innerText = 'Processando: ' + c + ' (' + (i + 1) + '/' + l.length + ')' + (q > 1 ? ' Qtd: ' + q : '');
+                                }, 50);
+                            });
+                            if (!nomeEncontrado) {
+                                tentativasDeReinsercao++;
+                                log.innerText = `Limpando e re-inserindo código ${c}...`;
+                                await new Promise(r => setTimeout(r, 500)); 
+                            }
+                        }
+                        
+                        log.innerText = 'Nome carregado! Processando: ' + c + ' (' + (i + 1) + '/' + l.length + ')' + (q > 1 ? ' Qtd: ' + q : '');
+                        
                         if (q > 1) {
                             var qInp = document.querySelector('#quantidade-procedimento');
                             if (qInp) {
@@ -713,18 +713,17 @@ fetch('https://api.countapi.xyz/hit/seu-site/chave') // Substitua "seu-site/chav
                                 await new Promise(r => setTimeout(r, 100));
                             }
                         }
+                        
                         var btn = document.querySelector('#inclusao-consulta-pedido > section > as-tipo-pedido-sadt > div.procedimentos-servicos.card-config > as-procedimento-servico > div > div > button');
                         if (btn) { btn.click(); } else { log.innerText = 'Botão salvar não apareceu para ' + c; }
                         await new Promise(r => setTimeout(r, 400));
                     }
+                    
                     document.getElementById('bi').disabled = false;
                     alert('Finalizado!');
                 };
             })();
         },
-        // ============================================
-        // AQUI ESTÁ A CORREÇÃO NO INAS:
-        // ============================================
         "INAS": () => {
             (async () => {
                 if (document.getElementById('g-modal-inas')) return;
@@ -747,7 +746,6 @@ fetch('https://api.countapi.xyz/hit/seu-site/chave') // Substitua "seu-site/chav
                     <div id="g-status" style="margin-top:10px;font-size:11px;color:#2ecc71;font-weight:bold"></div>
                 `;
                 document.body.appendChild(div);
-
                 const btn = document.getElementById('g-start');
                 const btnStop = document.getElementById('g-stop');
                 const btnClose = document.getElementById('g-close');
@@ -755,8 +753,7 @@ fetch('https://api.countapi.xyz/hit/seu-site/chave') // Substitua "seu-site/chav
                 const txt = document.getElementById('g-codes');
                 const countDisp = document.getElementById('g-count');
                 let isRunning = false;
-
-                // Eventos de Parar e Fechar
+                
                 btnClose.onclick = () => { isRunning = false; div.remove(); };
                 btnStop.onclick = () => { 
                     isRunning = false; 
@@ -767,7 +764,7 @@ fetch('https://api.countapi.xyz/hit/seu-site/chave') // Substitua "seu-site/chav
                     txt.disabled = false; 
                     setTimeout(() => div.remove(), 1500); 
                 };
-
+                
                 const getCodes = () => {
                     const matches = [...txt.value.matchAll(/403\d{5}/g)].map(m => m[0]);
                     const counts = {};
@@ -776,13 +773,13 @@ fetch('https://api.countapi.xyz/hit/seu-site/chave') // Substitua "seu-site/chav
                     const order = unicos.filter(c => counts[c] === 1).concat(unicos.filter(c => counts[c] > 1));
                     return order.map(code => ({ code, qty: counts[code] }));
                 };
-
+                
                 txt.oninput = () => {
                     const codes = getCodes();
                     const total = codes.reduce((a, c) => a + c.qty, 0);
                     countDisp.innerText = `Únicos: ${codes.length} | Total: ${total}`;
                 };
-
+                
                 btn.onclick = async () => {
                     let codes = getCodes();
                     if (!codes.length) return alert('Nenhum código encontrado!');
@@ -791,7 +788,6 @@ fetch('https://api.countapi.xyz/hit/seu-site/chave') // Substitua "seu-site/chav
                     btn.style.display = 'none';
                     btnStop.style.display = 'block';
                     txt.disabled = true;
-
                     const C = { ADD: 'Adicionar', TAB: '22 - Procedimentos e eventos em saúde' };
                     const wait = ms => new Promise(r => setTimeout(r, ms));
                     
@@ -920,18 +916,14 @@ fetch('https://api.countapi.xyz/hit/seu-site/chave') // Substitua "seu-site/chav
                             }
                         }
                     };
-
                     await runProcess(codes);
                     
                     if (!isRunning) return;
                     status.innerText = '🔍 Conferindo tabela e quantidades...';
                     await wait(1000);
-
-                    // Pega a tabela e confere as linhas e os valores numéricos de cada uma
                     let allTables = Array.from(document.querySelectorAll('table'));
                     let table = allTables.find(t => t.innerText.includes('403') || t.offsetParent !== null);
                     let missing = [];
-
                     if (table) {
                         let rows = Array.from(table.querySelectorAll('tbody tr'));
                         for (let row of rows) {
@@ -941,38 +933,29 @@ fetch('https://api.countapi.xyz/hit/seu-site/chave') // Substitua "seu-site/chav
                             
                             if (codeObj) {
                                 let tds = Array.from(row.querySelectorAll('td'));
-                                // Pega células que contêm números pequenos, filtrando o próprio código (que tem 8 dígitos)
                                 let nums = tds.map(td => td.innerText.trim()).filter(t => /^\d+$/.test(t) && t.length < 5);
                                 let expectedQtyStr = codeObj.qty.toString();
-
-                                // Se ele tem uma quantidade renderizada lá, e ela não corresponde com o que queremos
                                 if (nums.length > 0 && !nums.includes(expectedQtyStr)) {
                                     status.innerText = `🗑️ Qtd incorreta em ${codeObj.code}. Removendo para re-inserir...`;
-                                    // Procura o SVG da lixeira exatamente onde você solicitou, ou tenta caminhos similares caso haja leves variações
                                     let trash = row.querySelector('td.last-column svg, td.last-column > div > div > div > svg, td:last-child svg');
                                     if (trash) {
                                         click(trash);
-                                        await wait(1000); // Tempo para o site remover e a tela atualizar
+                                        await wait(1000); 
                                     }
                                 }
                             }
                         }
                     }
-
                     if (!isRunning) return;
-
-                    // Revalida a tabela para caçar os que estavam faltando originalmente ou acabaram de ser excluídos
                     allTables = Array.from(document.querySelectorAll('table'));
                     table = allTables.find(t => t.innerText.includes('403') || t.offsetParent !== null);
                     let tableText = table ? table.innerText : '';
                     missing = codes.filter(c => !tableText.includes(c.code));
-
                     if (missing.length > 0) {
                         status.innerText = `⚠️ Inserindo ${missing.length} itens ausentes/corrigidos...`;
                         await wait(1000);
                         await runProcess(missing);
                     }
-
                     if (!isRunning) return;
                     status.innerText = '✅ Fim! Tudo conferido.';
                     await wait(2000);
@@ -997,8 +980,12 @@ fetch('https://api.countapi.xyz/hit/seu-site/chave') // Substitua "seu-site/chav
                 }).concat(unicos.filter(function (c) {
                     return counts[c] > 1;
                 }));
+                
                 var W = window.open("", "RoboExames", "width=350,height=280");
-                W.document.write("<body style='font-family:sans-serif;text-align:center;background:#f0f7ff;padding:20px'><h3>🤖 Robô Finalizador</h3><div id='msg' style='font-size:14px;color:#0056b3;font-weight:bold;'>Iniciando...</div><div id='status' style='font-size:12px;color:#666;margin-top:5px'></div><button onclick='window.close()' style='margin-top:15px;padding:8px;cursor:pointer;background:#ff4757;color:white;border:none;border-radius:5px;font-weight:bold;'>PARAR</button></body>");
+                if (!W) return alert("ERRO: POPUP BLOQUEADO! Permita popups no navegador.");
+                
+                W.document.write("<body style='font-family:sans-serif;text-align:center;background:#f0f7ff;padding:20px'><h3>🤖 Robô TRF (Sincronizado)</h3><div id='msg' style='font-size:14px;color:#0056b3;font-weight:bold;'>Iniciando...</div><div id='status' style='font-size:12px;color:#666;margin-top:5px'></div><button onclick='window.close()' style='margin-top:15px;padding:8px;cursor:pointer;background:#ff4757;color:white;border:none;border-radius:5px;font-weight:bold;'>PARAR</button></body>");
+                
                 var s = W.document.createElement('script');
                 s.textContent = `
                     var idx = 0;
@@ -1013,42 +1000,13 @@ fetch('https://api.countapi.xyz/hit/seu-site/chave') // Substitua "seu-site/chav
                     var selBtnSalvar = "body > table > tbody > tr:nth-child(1) > td > div > table > tbody > tr:nth-child(2) > td > table > tbody > tr > td:nth-child(2) > table > tbody > tr > td > table > tbody > tr > td > table > tbody > tr:nth-child(1) > td > div > div.act_box > div > div > div > div:nth-child(2) > a";
                     var selBtnFinalizar = "body > table > tbody > tr:nth-child(1) > td > div > table > tbody > tr:nth-child(2) > td > table > tbody > tr > td:nth-child(2) > table > tbody > tr > td > table > tbody > tr > td > table > tbody > tr:nth-child(1) > td > div > div.act_box > div > div > div > div:nth-child(3) > a";
                     var selErro = "#tsk_toolbar";
-                    
-                    function checarStatusPagina(ehUltimo, callback) {
-                        var start = Date.now();
-                        var interval = setInterval(function() {
-                            try {
-                                var doc = window.opener.document;
-                                var erro = doc.querySelector(selErro);
-                                var inp = doc.querySelector(selCod);
-                                if (erro && erro.innerText.includes("Verifique")) {
-                                    clearInterval(interval);
-                                    callback('erro');
-                                } else if (!ehUltimo && inp && inp.value === "") {
-                                    clearInterval(interval);
-                                    callback('pronto');
-                                } else if (ehUltimo && (!inp || inp.value === "")) {
-                                    clearInterval(interval);
-                                    callback('pronto');
-                                } else if (Date.now() - start > 15000) {
-                                    clearInterval(interval);
-                                    callback('timeout');
-                                }
-                            } catch(e) {
-                                if (ehUltimo) {
-                                    clearInterval(interval);
-                                    callback('pronto');
-                                }
-                            }
-                        }, 500);
-                    }
-                    
                     function proximoPasso() {
                         if(idx >= lista.length) {
                             msg.innerHTML = "<b style='color:green'>✅ TUDO FINALIZADO!</b>";
                             st.innerText = "";
                             return;
                         }
+                        
                         try {
                             var doc = window.opener.document;
                             var inp = doc.querySelector(selCod);
@@ -1064,72 +1022,92 @@ fetch('https://api.countapi.xyz/hit/seu-site/chave') // Substitua "seu-site/chav
                                     f.dispatchEvent(new Event('change', {bubbles:true}));
                                     
                                     erro.innerText = "AGUARDANDO SISTEMA...";
+                                     
                                     setTimeout(function(){
                                         var btn = ehUltimo ? doc.querySelector(selBtnFinalizar) : doc.querySelector(selBtnSalvar);
                                         if(btn) btn.click();
-                                        checarStatusPagina(ehUltimo, function(status) {
-                                            if(status === 'pronto') {
-                                                idx++;
-                                                setTimeout(proximoPasso, 800);
-                                            } else {
-                                                setTimeout(proximoPasso, 800);
-                                            }
-                                        });
+                                        
+                                        var checarVazio = setInterval(function() {
+                                            try {
+                                                var docAtual = window.opener.document;
+                                                var inpAtual = docAtual.querySelector(selCod);
+                                                
+                                                if (ehUltimo || (inpAtual && inpAtual.value === "")) {
+                                                    clearInterval(checarVazio);
+                                                    idx++;
+                                                    setTimeout(proximoPasso, 300); 
+                                                }
+                                            } catch(e) {}
+                                        }, 250);
                                     }, 500);
                                 }
+                                return; 
+                            }
+                            
+                            var codAtual = lista[idx];
+                            var qtdAtual = qtds[codAtual];
+                            
+                            if (!inp || inp.value !== "") {
+                                setTimeout(proximoPasso, 500);
                                 return;
                             }
                             
-                            if (inp && inp.value === "") {
-                                var codAtual = lista[idx];
-                                var qtdAtual = qtds[codAtual];
-                                msg.innerText = "🚀 Lançando: " + codAtual + " (" + qtdAtual + "x)";
-                                st.innerText = (idx + 1) + " / " + lista.length;
-                                
-                                inp.value = codAtual;
-                                inp.dispatchEvent(new Event('input', {bubbles:true}));
-                                inp.dispatchEvent(new Event('change', {bubbles:true}));
-                                
-                                var f22 = doc.querySelector(sel22);
-                                if(f22) {
-                                    f22.value = "22";
-                                    f22.dispatchEvent(new Event('input', {bubbles:true}));
-                                    f22.dispatchEvent(new Event('change', {bubbles:true}));
-                                }
-                                
-                                var fFrase = doc.querySelector(selFrase);
-                                if(fFrase) {
-                                    fFrase.value = "Exames-Patologia Clínica";
-                                    fFrase.dispatchEvent(new Event('input', {bubbles:true}));
-                                    fFrase.dispatchEvent(new Event('change', {bubbles:true}));
-                                }
-                                
-                                var inpQtd = doc.querySelector(selQtd);
-                                if(inpQtd) {
-                                    inpQtd.value = qtdAtual;
-                                    inpQtd.dispatchEvent(new Event('input', {bubbles:true}));
-                                    inpQtd.dispatchEvent(new Event('change', {bubbles:true}));
-                                }
-                                
-                                setTimeout(function(){
-                                    var btn = ehUltimo ? doc.querySelector(selBtnFinalizar) : doc.querySelector(selBtnSalvar);
-                                    if(btn) btn.click();
-                                    checarStatusPagina(ehUltimo, function(status) {
-                                        if(status === 'pronto') {
-                                            idx++;
-                                            setTimeout(proximoPasso, 800);
-                                        } else {
-                                            setTimeout(proximoPasso, 800);
-                                        }
-                                    });
-                                }, 500);
-                            } else {
-                                setTimeout(proximoPasso, 1000);
+                            msg.innerText = "🚀 Lançando: " + codAtual + " (" + qtdAtual + "x)";
+                            st.innerText = (idx + 1) + " / " + lista.length;
+                            inp.value = codAtual;
+                            inp.dispatchEvent(new Event('input', {bubbles:true}));
+                            inp.dispatchEvent(new Event('change', {bubbles:true}));
+                            
+                            var f22 = doc.querySelector(sel22);
+                            if(f22) {
+                                f22.value = "22";
+                                f22.dispatchEvent(new Event('input', {bubbles:true}));
+                                f22.dispatchEvent(new Event('change', {bubbles:true}));
                             }
+                            
+                            var fFrase = doc.querySelector(selFrase);
+                            if(fFrase) {
+                                fFrase.value = "Exames-Patologia Clínica";
+                                fFrase.dispatchEvent(new Event('input', {bubbles:true}));
+                                fFrase.dispatchEvent(new Event('change', {bubbles:true}));
+                            }
+                            
+                            var inpQtd = doc.querySelector(selQtd);
+                            if(inpQtd) {
+                                inpQtd.value = qtdAtual;
+                                inpQtd.dispatchEvent(new Event('input', {bubbles:true}));
+                                inpQtd.dispatchEvent(new Event('change', {bubbles:true}));
+                            }
+                            
+                            setTimeout(function(){
+                                var btn = ehUltimo ? doc.querySelector(selBtnFinalizar) : doc.querySelector(selBtnSalvar);
+                                if(btn) btn.click();
+                                
+                                var checarVazio = setInterval(function() {
+                                    try {
+                                        var docAtual = window.opener.document;
+                                        var erroAtual = docAtual.querySelector(selErro);
+                                        
+                                        if (erroAtual && erroAtual.innerText.includes("Verifique")) {
+                                            clearInterval(checarVazio);
+                                            setTimeout(proximoPasso, 300);
+                                            return;
+                                        }
+                                        
+                                        var inpAtual = docAtual.querySelector(selCod);
+                                        if (ehUltimo || (inpAtual && inpAtual.value === "")) {
+                                            clearInterval(checarVazio);
+                                            idx++;
+                                            setTimeout(proximoPasso, 300); 
+                                        }
+                                    } catch(erroInterno) {}
+                                }, 250);
+                            }, 500);
                         } catch(e) {
                             setTimeout(proximoPasso, 1000);
                         }
                     }
+                    
                     setTimeout(proximoPasso, 1000);
                 `;
                 W.document.body.appendChild(s);
@@ -1149,18 +1127,30 @@ fetch('https://api.countapi.xyz/hit/seu-site/chave') // Substitua "seu-site/chav
                     <button onclick="this.parentElement.remove()" style="width:100%;padding:5px;margin-top:10px;background:#d63031;color:#fff;border:none;border-radius:5px;cursor:pointer;font-weight:bold;">❌ FECHAR</button>
                 `;
                 document.body.appendChild(d);
+                
                 const wait = ms => new Promise(r => setTimeout(r, ms));
+                
                 document.getElementById('g-btn').onclick = async () => {
                     const t = document.getElementById('g-txt').value;
-                    let cods = t.match(/\b\d{8}\b/g) || [];
-                    if (!cods.length) return alert('Nenhum código de 8 dígitos encontrado!');
-                    cods = [...new Set(cods)];
+                    let raw = t.match(/\b\d{8}\b/g) || [];
+                    if (!raw.length) return alert('Nenhum código de 8 dígitos encontrado!');
+                    
+                    var counts = {};
+                    raw.forEach(x => counts[x] = (counts[x] || 0) + 1);
+                    var unicos = [...new Set(raw)];
+                    var order = unicos.filter(c => counts[c] === 1).concat(unicos.filter(c => counts[c] > 1));
+                    var codigos = order.map(k => ({ cod: k, qtd: counts[k] }));
                     const status = document.getElementById('g-status');
                     document.getElementById('g-btn').disabled = true;
                     const setVal = Object.getOwnPropertyDescriptor(HTMLInputElement.prototype, 'value').set;
-                    for (let i = 0; i < cods.length; i++) {
-                        let c = cods[i];
-                        status.innerText = `Processando ${i + 1}/${cods.length}: ${c}`;
+                    
+                    for (let i = 0; i < codigos.length; i++) {
+                        let item = codigos[i];
+                        let c = item.cod;
+                        let q = item.qtd;
+                        
+                        status.innerText = `Processando ${i + 1}/${codigos.length}: ${c} (Qtd: ${q})`;
+                        
                         let inp = document.querySelector('#termoCodigoSolicitado');
                         if (inp) {
                             inp.focus();
@@ -1171,6 +1161,17 @@ fetch('https://api.countapi.xyz/hit/seu-site/chave') // Substitua "seu-site/chav
                             inp.dispatchEvent(new Event('input', { bubbles: true }));
                             inp.dispatchEvent(new Event('change', { bubbles: true }));
                             await wait(500);
+                        }
+                        
+                        if (q > 1) {
+                            let inpQtd = document.querySelector('#termoQtdSolicitada');
+                            if (inpQtd) {
+                                inpQtd.focus();
+                                setVal.call(inpQtd, q);
+                                inpQtd.dispatchEvent(new Event('input', { bubbles: true }));
+                                inpQtd.dispatchEvent(new Event('change', { bubbles: true }));
+                                await wait(300);
+                            }
                         }
                         let inpng = document.querySelector('#termoSolicitado > div > div > div.ng-input > input[type=text]');
                         if (inpng) {
@@ -1185,7 +1186,9 @@ fetch('https://api.countapi.xyz/hit/seu-site/chave') // Substitua "seu-site/chav
                             await wait(500);
                             inpng.dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter', keyCode: 13, bubbles: true }));
                         }
+                        
                         await wait(1000);
+                        
                         let btn = document.querySelector('app-autorizacao-modal app-aut-honorarios fieldset main form section button');
                         if (btn) {
                             btn.click();
@@ -1197,112 +1200,138 @@ fetch('https://api.countapi.xyz/hit/seu-site/chave') // Substitua "seu-site/chav
                     document.getElementById('g-btn').disabled = false;
                 };
             })();
+        },
+        "AFFEGO": () => {
+            (async function () {
+                var l = prompt("Cole os códigos aqui:");
+                if (!l) return;
+                var raw = l.match(/403\d{5}/g) || l.match(/\b\d{8}\b/g);
+                if (!raw) return alert("Sem códigos!");
+                var counts = {};
+                raw.forEach(x => counts[x] = (counts[x] || 0) + 1);
+                var unicos = [...new Set(raw)];
+                var order = unicos.filter(c => counts[c] === 1).concat(unicos.filter(c => counts[c] > 1));
+                
+                const wait = ms => new Promise(r => setTimeout(r, ms));
+                let idTela = 0; 
+                for (let i = 0; i < order.length; i++) {
+                    if (idTela === 5) {
+                        idTela++; // Pula o campo 5
+                    }
+                    let cod = order[i];
+                    let qtd = counts[cod];
+                    let idCod = "#procedimento" + idTela;
+                    let idDesc = "#desc_procedimento" + idTela;
+                    let idQtd = "#quantidade" + idTela;
+                    let inpt = document.querySelector(idCod);
+                    
+                    if (!inpt) {
+                        let btnAdd = document.querySelector("#adicionaPROCEDIMENTO");
+                        if (!btnAdd) {
+                            let tags = Array.from(document.querySelectorAll('a, button, span, div'));
+                            btnAdd = tags.find(e => e.textContent && e.textContent.includes('Adicionar Procedimento'));
+                        }
+                        
+                        if (btnAdd) {
+                            btnAdd.scrollIntoView({ block: 'center' });
+                            btnAdd.click();
+                            
+                            // Espera agressiva (rápida)
+                            for(let w = 0; w < 40; w++) {
+                                 await wait(100);
+                                inpt = document.querySelector(idCod);
+                                if (inpt) break;
+                            }
+                            await wait(200); // tempo mínimo pro JS da tela plugar os eventos
+                        }
+                    }
+                    if (inpt) {
+                        inpt.scrollIntoView({ block: 'center' });
+                        inpt.focus();
+                        inpt.value = cod;
+                        inpt.dispatchEvent(new Event('input', { bubbles: true }));
+                        inpt.dispatchEvent(new Event('change', { bubbles: true }));
+                        
+                        inpt.dispatchEvent(new KeyboardEvent('keydown', { key: 'Tab', keyCode: 9, bubbles: true }));
+                        inpt.blur();
+                        inpt.dispatchEvent(new Event('focusout', { bubbles: true }));
+                        await wait(300); // Reduzido
+                        // PREENCHE A QUANTIDADE SE FOR MAIOR QUE 1
+                        if (qtd > 1) {
+                            let fQtd = document.querySelector(idQtd);
+                            if (fQtd) {
+                                fQtd.focus();
+                                fQtd.value = qtd;
+                                fQtd.dispatchEvent(new Event('input', { bubbles: true }));
+                                fQtd.dispatchEvent(new Event('change', { bubbles: true }));
+                                await wait(100);
+                            }
+                        }
+                        let desc = document.querySelector(idDesc); 
+                        if(desc) {
+                            desc.focus();
+                            desc.dispatchEvent(new MouseEvent('mousedown', { bubbles: true }));
+                            desc.dispatchEvent(new MouseEvent('mouseup', { bubbles: true }));
+                            desc.click();
+                            
+                            // Polling rápido para o auto-complete
+                            for(let t = 0; t < 40; t++) {
+                                let txt = desc.value || desc.innerText || desc.textContent || "";
+                                if(txt.trim() !== "") break;
+                                 await wait(100);
+                            }
+                        }
+                        
+                        await wait(200); // Reduzido
+                        // Clique preventivo para a próxima linha
+                        if (idTela >= 4 && i < order.length - 1) {
+                            let btnAdd = document.querySelector("#adicionaPROCEDIMENTO");
+                            if (!btnAdd) {
+                                let tags = Array.from(document.querySelectorAll('a, button, span, div'));
+                                btnAdd = tags.find(e => e.textContent && e.textContent.includes('Adicionar Procedimento'));
+                            }
+                            if (btnAdd) {
+                                btnAdd.click();
+                                await wait(300); 
+                            }
+                        }
+                        idTela++; 
+                    } else {
+                         alert("Erro: O campo " + idCod + " não apareceu. Parei aqui.");
+                         break;
+                    }
+                }
+                alert("Finalizado! Foram inseridos " + order.length + " códigos únicos na AFFEGO.");
+            })();
         }
     };
-"MPLAN": () => {
-        (function () {
-            if (document.getElementById('g-painel-mplan')) return;
-            const d = document.createElement('div');
-            d.id = 'g-painel-mplan';
-            d.style.cssText = 'position:fixed;top:10px;right:10px;width:300px;background:#2d3436;color:#fff;padding:15px;z-index:999999;border-radius:8px;font-family:Arial;box-shadow:0 4px 10px rgba(0,0,0,0.5);border:3px solid #00b894';
-            d.innerHTML = `
-                <h3 style="margin:0 0 10px;color:#55efc4">🤖 Inserir Códigos Mplan</h3>
-                <textarea id="g-txt-mplan" style="width:100%;height:80px;color:#000;border-radius:4px;padding:5px;" placeholder="Cole os códigos aqui..."></textarea>
-                <button id="g-btn-mplan" style="width:100%;padding:10px;background:#00b894;color:#fff;border:none;border-radius:5px;cursor:pointer;margin-top:5px;font-weight:bold">INICIAR ▶</button>
-                <div id="g-status-mplan" style="margin-top:10px;font-size:12px;color:#dfe6e9">Aguardando...</div>
-                <button onclick="this.parentElement.remove()" style="width:100%;padding:5px;margin-top:10px;background:#d63031;color:#fff;border:none;border-radius:5px;cursor:pointer;font-weight:bold;">❌ FECHAR</button>
-            `;
-            document.body.appendChild(d);
-            const wait = ms => new Promise(r => setTimeout(r, ms));
-            document.getElementById('g-btn-mplan').onclick = async () => {
-                const t = document.getElementById('g-txt-mplan').value;
-                
-                // Filtra apenas termos de 8 dígitos que comecem com 403
-                let todosCods = t.match(/\b403\d{5}\b/g) || [];
-                if (!todosCods.length) return alert('Nenhum código de 8 dígitos iniciando com 403 encontrado!');
-                
-                // Agrupa e conta as quantidades de códigos repetidos
-                const contagem = {};
-                todosCods.forEach(c => { contagem[c] = (contagem[c] || 0) + 1; });
-                const itensUnicos = Object.keys(contagem).map(c => ({ codigo: c, qtd: contagem[c] }));
-                
-                const status = document.getElementById('g-status-mplan');
-                document.getElementById('g-btn-mplan').disabled = true;
-                const setVal = Object.getOwnPropertyDescriptor(HTMLInputElement.prototype, 'value').set;
-                
-                for (let i = 0; i < itensUnicos.length; i++) {
-                    let item = itensUnicos[i];
-                    status.innerText = `Processando ${i + 1}/${itensUnicos.length}: ${item.codigo} (Qtd: ${item.qtd})`;
-                    
-                    // 1. Procura o campo Cód. do Procedimento
-                    let inp = document.querySelector('input[name*="codigo" i], input[id*="codigo" i], input[placeholder*="Cód"]');
-                    if (!inp) {
-                        let inputsVisiveis = Array.from(document.querySelectorAll('input[type="text"]')).filter(el => el.clientHeight > 0 && el.id !== 'g-txt-mplan');
-                        inp = inputsVisiveis[0];
-                    }
-                    
-                    if (inp) {
-                        inp.focus();
-                        setVal.call(inp, '');
-                        inp.dispatchEvent(new Event('input', { bubbles: true }));
-                        await wait(300);
-                        setVal.call(inp, item.codigo);
-                        inp.dispatchEvent(new Event('input', { bubbles: true }));
-                        inp.dispatchEvent(new Event('change', { bubbles: true }));
-                        inp.dispatchEvent(new Event('blur', { bubbles: true }));
-                        await wait(1000); // Tempo para o sistema carregar o procedimento via Ajax
-                    }
-                    
-                    // 2. Procura o campo de Quantidade
-                    let inpQtd = document.querySelector('input[name*="qtd" i], input[id*="qtd" i], input[name*="quant" i]');
-                    if (!inpQtd) {
-                        let inputsVisiveis = Array.from(document.querySelectorAll('input[type="text"]')).filter(el => el.clientHeight > 0 && el.id !== 'g-txt-mplan');
-                        if(inputsVisiveis.length >= 4) inpQtd = inputsVisiveis[3];
-                    }
-// =========================================================
-// FUNÇÃO PARA MOSTRAR OS USUÁRIOS ONLINE SIMULTANEAMENTE
-// =========================================================
-function monitorarUsuariosOnline() {
-    // Link direto para a pasta que o Python está alimentando
-    const FIREBASE_URL = "https://automatizador-7d7d7-default-rtdb.firebaseio.com/usuarios_online.json";
 
-    // Executa a checagem a cada 3 segundos (tempo real)
-    setInterval(() => {
-        fetch(FIREBASE_URL)
-            .then(resposta => resposta.json())
-            .then(dados => {
-                // Se houver computadores registrados, conta quantos são. Se estiver vazio, define como 0.
-                const totalOnline = dados ? Object.keys(dados).length : 0;
-                
-                // Encontra o contador que você criou na linha 25
-                const elementoContador = document.getElementById("contador-online");
-                
-                if (elementoContador) {
-                    elementoContador.innerHTML = `🟢 Usuários online: ${totalOnline}`;
-                }
-            })
-            .catch(erro => console.error("Erro ao atualizar o painel:", erro));
-    }, 3000); // 3000 milissegundos = 3 segundos
-}
-
-// Ativa o monitoramento assim que a central for aberta
-monitorarUsuariosOnline();
-function monitorarUsuariosOnline() {
-    const FIREBASE_URL = "https://automatizador-7d7d7-default-rtdb.firebaseio.com/usuarios_online.json";
-
-    setInterval(() => {
-        fetch(FIREBASE_URL)
-            .then(resposta => resposta.json())
-            .then(dados => {
-                const totalOnline = dados ? Object.keys(dados).length : 0;
-                const elementoContador = document.getElementById("contador-online");
-                
-                if (elementoContador) {
-                    elementoContador.innerHTML = `🟢 Usuários online: ${totalOnline}`;
-                }
-            })
-            .catch(erro => console.error("Erro ao atualizar o painel:", erro));
-    }, 3000);
-}
-
-monitorarUsuariosOnline();
+    // 4. Injeta os botões na janela central
+    const container = document.getElementById('botoes-robos');
+    for (const [nome, func] of Object.entries(robos)) {
+        const btn = document.createElement('button');
+        btn.textContent = `Rodar Robô: ${nome}`;
+        btn.style.cssText = `
+            padding: 12px;
+            background: #2d7dff;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 14px;
+            transition: all 0.2s ease;
+            margin-bottom: 5px;
+        `;
+        // Efeito de Hover visual
+        btn.onmouseover = () => btn.style.background = '#1a5bcc';
+        btn.onmouseout = () => btn.style.background = '#2d7dff';
+        
+        // Ação ao clicar: Fecha o menu central e roda o código original
+        btn.onclick = () => {
+            menu.remove();
+            func();
+        };
+        container.appendChild(btn);
+    }
+})();
