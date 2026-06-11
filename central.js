@@ -4,21 +4,7 @@
 
     // 2. Criação do painel visual do Menu Central
     const menu = document.createElement('div');
-    menu.id = 'menu-central-robos';
-    menu.style.cssText = `
-        position: fixed;
-        top: 20px;
-        left: 20px;
-        width: 320px;
-        background: #1e1e1e;
-        color: #f1f1f1;
-        border-radius: 12px;
-        box-shadow: 0 10px 40px rgba(0,0,0,0.6);
-        z-index: 2147483647;
-        font-family: system-ui, Arial, sans-serif;
-        padding: 20px;
-        border: 2px solid #2d7dff;
-    `;
+    me
     menu.innerHTML = `
         <h2 style="margin: 0 0 10px 0; font-size: 18px; text-align: center; color: #2d7dff;">🤖 Central de Automação</h2>
         <p style="font-size: 13px; text-align: center; color: #aaa; margin-bottom: 20px;">Selecione o robô para iniciar:</p>
